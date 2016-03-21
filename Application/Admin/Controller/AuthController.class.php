@@ -15,7 +15,7 @@ class AuthController extends BaseController{
      public function check_autha(){
         //判断用户登录情况
         //new \Extend\Slog('./logs0315.text','测试信息',__FILE__);
-        \Think\Log::record('测试日志信息，这是警告级别','WARN');
+        //\Think\Log::record('测试日志信息，这是警告级别','WARN');
         $sid = session('admin_id');
         if(!isset($sid)) {
             redirect(U('/Admin/Login/index'));
