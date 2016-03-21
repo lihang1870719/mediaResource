@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>管理员登录</title>
+	
+	<!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="__STATIC__/css/bootstrap.css" >
+    
+    <!-- flat UI CSS -->
+    <link rel="stylesheet" href="__STATIC__/css/flat-ui.css">
+        
+    <!-- MediaData CSS-->
+	<link rel="stylesheet" href="__STATIC__/css/style.css">
+</head>
+<body>
+	<div class="container">
+		<div class="login">
+	        <div class="login-screen">
+	          <div class="title">Admin登录</div>
+	          <form class="login-form clearfix" action="{:U('login/login')}" method="post">
+	          	<input type="hidden" id="action-url" value="{:U('login/login')}">
+	            <div class="form-group">
+	              <input type="text" name="username" class="form-control login-field" value="" placeholder="Enter your name" id="login-username" />
+	              <label class="login-field-icon fui-user" for="login-name"></label>
+	            </div>
+	
+	            <div class="form-group">
+	              <input type="password" name="password" class="form-control login-field" value="" placeholder="Password" id="login-password" />
+	              <label class="login-field-icon fui-lock" for="login-pass"></label>
+	            </div>
+	            
+	            <div class="form-group">
+	            	<div class="row">
+	                  <div class="col-md-8">
+	                      <input type="text"  name="verify" class="form-control login-field" id="login-verify" placeholder="verifyCode">
+	                  </div>
+	                  <div class="col-md-4">
+	                  	  <input type="hidden" id="verify-url" value="{:U('login/verify')}" />
+	                      <a href="javascript:void(0) "><img class="verify" src="{:U('login/verify')}" alt="点击刷新"/></a>
+	                  </div>
+	                 </div>
+                </div>
+                
+				<div class="form-group">
+	            	<input type="submit" class="btn btn-primary btn-lg btn-block submit" value="Login in">
+	            </div>
+	          	<p class="tips"></p>
+	          </form>
+	        </div>
+      </div>
+	</div>
+
+	<script src="__STATIC__/js/require.js" data-main="__STATIC__/js/config.js"></script>
+</body>
+</body>
+</html>

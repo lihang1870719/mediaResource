@@ -1,0 +1,52 @@
+@CHARSET "UTF-8";
+/*login*/
+.login-screen .title{
+	left: 500px;
+    position: absolute;
+    top: 60px;
+    font-size: 45px;
+}
+
+.login-links {
+    color: #bfc9ca;
+    display: block;
+    font-size: 13px;
+    text-align: center;
+}	
+
+.login-screen .tips-error {
+	color: #FB0E12;
+	margin: 0;
+}
+
+.login-screen .tips-success {
+	color: #A3EA1F;
+	margin: 0;
+}
+
+.fl{
+	float:left;
+}
+
+.fr{
+	float:right;
+}
+
+.clearfix:after{
+	content:".";
+	display:block;
+	height:0;
+	clear:both;
+	visibility:hidden
+} 
+
+.clearfix{
+	*zoom:1;
+}
+
+/**sidebar*/
+.dropdown-menu > .open > a, .dropdown-menu > .open > a:hover, .dropdown-menu > .open > a:focus {
+    color: #fff;
+    background-color: #080808;
+}
+

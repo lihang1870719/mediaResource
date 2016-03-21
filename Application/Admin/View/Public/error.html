@@ -1,0 +1,22 @@
+<include file="Public/header" title="成功" />
+<div id="page-wrapper">
+	<?php if(isset($message)) {?>
+	<div class="row success">
+		<h1>:)</h1>
+		<?php echo($message); ?>
+	</div>
+	<?php }else{?>
+	<div class="row error">
+		<h1>:(</h1>
+		<?php echo($error); ?>
+	</div>
+	<?php }?>
+	<div class="row jump">
+	页面自动 <a id="href" href="<?php echo($jumpUrl); ?>">跳转</a> 等待时间： <b id="wait"><?php echo($waitSecond); ?></b>
+	</div>
+    <div class="row">
+        <div class="col-md-3 col-md-offset-3">
+        </div>
+    </div>
+</div>
+<include file="Public/footer" />
