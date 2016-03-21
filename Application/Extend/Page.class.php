@@ -70,6 +70,7 @@ class Page{
 
         /* 生成URL */
         $this->parameter[$this->p] = '[PAGE]';
+        new \Extend\Slog('./logs0320.text',serialize($this->parameter),__FILE__);
         $this->url = U(ACTION_NAME, $this->parameter);
         /* 计算分页信息 */
         $this->totalPages = ceil($this->totalRows / $this->listRows); //总页数
@@ -101,7 +102,6 @@ class Page{
         if($this->totalPages > $this->rollPage && ($this->nowPage + $now_cool_page) < $this->totalPages){
             $the_end = '<li><a class="end" href="' . $this->url($this->totalPages) . '">' . $this->config['last'] . '</a></li>';
         }
-
         //数字连接
         $link_page = "";
         for($i = 1; $i <= $this->rollPage; $i++){
@@ -131,6 +131,6 @@ class Page{
             array('%HEADER%', '%NOW_PAGE%', '%UP_PAGE%', '%DOWN_PAGE%', '%FIRST%', '%LINK_PAGE%', '%END%', '%TOTAL_ROW%', '%TOTAL_PAGE%'),
             array($this->config['header'], $this->nowPage, $up_page, $down_page, $the_first, $link_page, $the_end, $this->totalRows, $this->totalPages),
             $this->config['theme']);
-        return "<ul class=\"pagination\">{$page_str}</ul>";
+        return "<ul class=\"pagination fr\">{$page_str}</ul>";
     }
 }

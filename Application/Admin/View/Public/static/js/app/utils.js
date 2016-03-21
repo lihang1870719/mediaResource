@@ -10,7 +10,7 @@ define(['jquery'], function($) {
             if(count == 1) {       
 		    	window.location.href = url;
             }    
-        }, 1000);  
+        }, 500);  
     }
   }
 });

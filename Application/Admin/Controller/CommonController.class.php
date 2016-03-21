@@ -24,7 +24,6 @@ class CommonController extends AuthController{
         } else {
            $name=CONTROLLER_NAME;
         }
-        new \Extend\Slog('./logs0320.text',serialize($map),__FILE__);
         $model = D ($name);
         if (! empty ( $model )) {
             $this->_list ( $model, $map );
@@ -114,6 +113,7 @@ class CommonController extends AuthController{
             //echo $model->getlastsql();
             //分页跳转的时候保证查询条件
             foreach ( $map as $key => $val ) {
+                new \Extend\Slog('./logs0320.text',serialize($val),__FILE__);
                 if (! is_array ( $val )) {
                     $p->parameter .= "$key=" . urlencode ( $val ) . "&";
                 }
@@ -121,13 +121,13 @@ class CommonController extends AuthController{
             //分页显示
     
             $page = $p->show ();
+            
             //列表排序显示
             $sortImg = $sort; //排序图标
             $sortAlt = $sort == 'desc' ? l("ASC_SORT") : l("DESC_SORT"); //排序提示
             $sort = $sort == 'desc' ? 1 : 0; //排序方式
 
             //catergory 增加|--
-            new \Extend\Slog('./logs0320.text',CONTROLLER_NAME,__FILE__);
             if (CONTROLLER_NAME === 'Category' && empty($map) ) {
                 $voList = "";
                 $voList = $model->where($map)->order('id ASC')->select();
@@ -136,7 +136,6 @@ class CommonController extends AuthController{
             
             //模板赋值显示            
             $this->assign ( 'model', $voList );
-            new \Extend\Slog('./logs0320.text',serialize($voList),__FILE__);
             $this->assign ( 'sort', $sort );
             $this->assign ( 'order', $order );
             $this->assign ( 'sortImg', $sortImg );
