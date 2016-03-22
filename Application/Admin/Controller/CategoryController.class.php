@@ -69,13 +69,17 @@ class CategoryController extends CommonController
         if (IS_POST) {
             $model = D("Category");
             if (!$model->create()) {
-                $this->error($model->getError());
+                $this->ajaxReturn(array('info' => $model->getError()));
             }else{
                 //   dd(I());die;
                 if ($model->save()) {
-                    $this->success("分类更新成功", U('category/index'));
+                    $message = array(
+                        'info' => 'ok',
+                        'callback' => U('category/index')
+                    );
+                    $this->ajaxReturn($message);
                 } else {
-                    $this->error("分类更新失败");
+                    $this->ajaxReturn(array('info' => '分类更新失败'));
                 }
             }
         }
@@ -87,23 +91,28 @@ class CategoryController extends CommonController
      */
     public function delete($id)
     {
+        new \Extend\Slog('./logs0321.text',serialize($id),__FILE__);
         $model = M('category');
         //查询属于这个分类的文章
         $posts = M('post')->where("cate_id= %d",$id)->select();
         if($posts){
-            $this->error("禁止删除含有文章的分类");
+            $this->ajaxReturn(array('info' => '禁止删除含有文章的分类'));
         }
         //禁止删除含有子分类的分类
         $hasChild = $model->where("pid= %d",$id)->select();
         if($hasChild){
-            $this->error("禁止删除含有子分类的分类");
+            $this->ajaxReturn(array('info' => '禁止删除含有子分类的分类'));
         }
         //验证通过
         $result = $model->delete(intval($id));
         if($result){
-            $this->success("分类删除成功", U('category/index'));
+            $message = array(
+                'info' => 'ok',
+                'callback' => U('category/index')
+            );
+            $this->ajaxReturn($message);
         }else{
-            $this->error("分类删除失败");
+            $this->ajaxReturn(array('info' => '分类删除失败'));
         }
     }
 }

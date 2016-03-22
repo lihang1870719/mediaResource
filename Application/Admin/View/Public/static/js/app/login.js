@@ -5,9 +5,10 @@
 define(['jquery','verify', 'utils'], function($, v, utils) {
   return {
     init: function() {
-		$('.submit').click(function(event){
+		var container = $('.login-form');
+		$(container).on('click' , '.submit', function(event){
 		   	//阻止表单默认提交事件
-			var container = $('.login-form');
+	
 			event.preventDefault();
 			var username = $('#login-username').val();
 			var password = $('#login-password').val();

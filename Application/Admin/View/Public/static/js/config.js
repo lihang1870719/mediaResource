@@ -21,9 +21,7 @@ require.config({
     });
 });*/
 require(['app', 'verify', 'login', 'category', 'jquery','bootstrap'],function(a, v, l, c){
-
 	a.init();	
-    a.del();
 	v.init();
     l.init();
     c.init();
