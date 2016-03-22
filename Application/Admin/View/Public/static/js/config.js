@@ -11,7 +11,8 @@ require.config({
     	verify:'app/verify',
     	login:'app/login',
     	utils:'app/utils',
-    	category:'app/category'
+    	category:'app/category',
+    	post:'app/post'
     }
 });
 
@@ -20,9 +21,10 @@ require.config({
     	v.init();
     });
 });*/
-require(['app', 'verify', 'login', 'category', 'jquery','bootstrap'],function(a, v, l, c){
+require(['app', 'verify', 'login', 'category', 'post', 'jquery', 'bootstrap'],function(a, v, l, c, p){
 	a.init();	
 	v.init();
     l.init();
     c.init();
+    p.init();
 });

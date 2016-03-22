@@ -9,3 +9,5 @@ thinkphp + mysql +bootstrap
 
 ## index.php 是前端的入口地址，包括了会员登录的页面
 ## m.php 是后台管理员的入口地址
+
+## 加上一个字段表示最后修改人

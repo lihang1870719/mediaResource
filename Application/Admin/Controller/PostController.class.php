@@ -1,6 +1,7 @@
 <?php
 namespace Admin\Controller;
-use Think\Controller;
+use Admin\Controller;
+
 class PostController extends CommonController
 {
     /**
@@ -12,9 +13,6 @@ class PostController extends CommonController
         if(trim($_REQUEST['key'])!='')
         {
             $map['post.title'] = array('like','%'.trim($_REQUEST['key']).'%');
-            $map['admin.username'] = array('like','%'.trim($_REQUEST['key']).'%');
-            $map['category.title'] = array('like','%'.trim($_REQUEST['key']).'%');
-            $map['_logic'] = 'or';
         }
         $this->assign("default_map",$map);
         parent::index(true);
