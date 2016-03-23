@@ -22,7 +22,7 @@
             <script id="course-content" name="content" type="text/plain">{$course.content|htmlspecialchars_decode}</script>
         </div>
         <input type="hidden" id="id" name="id" value="{$course.id}">
-        <input type="hidden" id="action-url" name="action" value="{:U('course/update')}">
+        <input type="hidden" id="action-url" name="action" value="{:U('live/approve')}">
         <button type="submit" class="btn btn-default submit">提交</button>
     </form>
 </div>

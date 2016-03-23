@@ -119,7 +119,7 @@ class CourseController extends CommonController {
         }
     }
     /**
-     * 删除文章
+     * 删除课程
      * @param  [type] $id [description]
      * @return [type]     [description]
      */

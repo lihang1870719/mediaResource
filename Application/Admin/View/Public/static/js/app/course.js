@@ -14,11 +14,15 @@ define(['jquery', 'utils'], function($, utils){
 						'cate_id': $('#course-cate').val(),
 						'pid': $('#course-pid').val(),
 						'link' : $('#course-link').val(),
-						'content': $('#course-content').val(),
+						'content': ue.getContent(),
 						'type': $("input[name=type]:checked").val()
 				};
 				var status = $('#course-status').val();
 				if ($(event.target).hasClass('appr-success')) {
+					if (data.link == "") {
+						alert("请分配课程地址");
+						return;
+					}
 					if (status == 0) {
 						//审批通过，可以开始直播
 						data.status = 1;
@@ -50,8 +54,12 @@ define(['jquery', 'utils'], function($, utils){
 						'title': $('#course-title').val(),
 						'cate_id': $('#course-cate').val(),
 						'pid': $('#course-pid').val(),
-						'content': $('#course-content').val()
+						'content': ue.getContent()
 				};
+				if (data.title == "") {
+					alert("请填写文章标题");
+					return;
+				}
 				var id = $('#id').val();
 				if(id != undefined) {
 					data.id = id;
@@ -63,7 +71,7 @@ define(['jquery', 'utils'], function($, utils){
 				var url = $('#aciton-url').val();
 				$.post(url, data, function(msg){
 				    if(msg.info == 'ok') {
-				    	//alert(msg.info);
+				    	alert(msg.info);
 				    	window.location.href = msg.callback;
 				    } else {
 				    	alert(msg.info);

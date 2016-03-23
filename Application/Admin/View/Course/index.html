@@ -45,9 +45,12 @@
                 <td>{$v.username}</td>
                 <td>{$v.category_title}</td>
                 <td>
-                    <if condition="$v.status eq 0"><span class="label label-success">待审批</span>
-                    <elseif condition="$v.status eq 1" /><span class="label label-info">可直播</span>
-                    <elseif condition="$v.status eq 2" /><span class="label label-primary">可点播</span>
+                    <if condition="$v.status eq 0"><span class="label label-info">待审批</span>
+                    <elseif condition="$v.status eq 1" /><span class="label label-warning">审批完成，可直播</span>
+                    <elseif condition="$v.status eq 2" /><span class="label label-primary">直播中</span>
+                  	<elseif condition="$v.status eq 3" /><span class="label label-info">直播完成，待审批</span>
+                    <elseif condition="$v.status eq 4" /><span class="label label-success">审批完成，可点播</span>
+                    <elseif condition="$v.status eq 5" /><span class="label label-danger">审核未通过</span>
                     </if>
                 </td>     
                 <td>

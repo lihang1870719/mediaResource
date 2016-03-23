@@ -1,3 +1,70 @@
-<include file="Public:header"  title="直播"/>
+<include file="Public/header" title="直播列表" />
 
-<include file="Public:footer"/>
+<div id="page-wrapper" class="live"> 
+    <div class="row">
+        <div class="col-md-6">
+            <a href="{:U('live/add')}" class="btn btn-success">添加直播间</a>
+        </div>
+        <div class="col-md-6">
+            <form action="{:U('live/index')}" method="get">
+                <div class="form-group input-group">
+                    <input type="text" class="form-control" name="key" placeholder="输入课程标题搜索">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>课程名称</th>
+                <th>类型</th>
+                <th>发布时间</th>
+                <th>作者</th>
+                <th>分类</th>
+                <th>状态</th>
+                <th>操作</th> 
+            </tr>
+        </thead>
+        <tbody>
+        <foreach name="model" item="v">
+            <tr>
+                <td>{$v.id}</td>
+                <td>{$v.title}</td>
+                <td>
+                    <if condition="$v.type eq 1"><span class="label label-success">普通</span>
+                    <elseif condition="$v.type eq 2" /><span class="label label-info">置顶</span>
+                    <elseif condition="$v.type eq 3" /><span class="label label-primary">热门</span>
+                    <elseif condition="$v.type eq 4" /><span class="label label-warning">推荐</span>
+                    </if>
+                </td>
+                <td>{$v.time|date="Y/m/d H:i:s",###}</td>
+                <td>{$v.username}</td>
+                <td>{$v.category_title}</td>
+                <td>
+                    <if condition="$v.status eq 0"><span class="label label-info">待审批</span>
+                    <elseif condition="$v.status eq 1" /><span class="label label-warning">审批完成，可直播</span>
+                    <elseif condition="$v.status eq 2" /><span class="label label-primary">直播中</span>
+                  	<elseif condition="$v.status eq 3" /><span class="label label-info">直播完成，待审批</span>
+                    <elseif condition="$v.status eq 4" /><span class="label label-success">审批完成，可点播</span>
+                    <elseif condition="$v.status eq 5" /><span class="label label-danger">审核未通过</span>
+                    </if>
+                </td>     
+                <td>
+	               	<a href="{:U('live/approve',array('id' => $v['id']))}">审批</a> |
+	                <a href="{:U('live/update',array('id' => $v['id']))}">编辑</a> | 
+	                <input type="hidden" value="{:U('live/delete',array('id' => $v['id']))}" class="delete-url">
+	                <a href="#" style="color:red;" class="delete-item">删除</a>
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    {$page}
+</div>
+
+
+<include file="Public/footer" />

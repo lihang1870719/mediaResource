@@ -1,4 +1,4 @@
-<include file="Public/header" title="编辑课程" />
+<include file="Public/header" title="审批课程" />
 <div id="page-wrapper" class="course">
     <form>
         <div class="form-group">
@@ -15,15 +15,32 @@
         </div>
         <div class="form-group">
             <label for="course-link">课程地址</label>
-            <input type="text" name="link" class="form-control" value="{$course.link}" id="course-link" placeholder="输入课程地址">
+            <input type="text" name="link" class="form-control" value="{$course.link}" id="course-link" placeholder="请管理员分配课程地址">
         </div>
         <div class="form-group">
             <label for="course-content">课程内容</label>
             <script id="course-content" name="content" type="text/plain">{$course.content|htmlspecialchars_decode}</script>
         </div>
+        <div class="form-group">
+            <label>课程标识</label>
+            <label class="radio-inline">
+              <input type="radio" name="type"  value="1" <if condition="$course.type eq 1">checked="checked"</if> >普通
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="type" value="2" <if condition="$course.type eq 2">checked="checked"</if>>置顶
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="type" value="3" <if condition="$course.type eq 3">checked="checked"</if>>热门
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="type" value="4" <if condition="$course.type eq 4">checked="checked"</if>>推荐
+            </label>
+        </div>
+        <input type="hidden" id="action-url" name="action" value="{:U('course/approve')}">
         <input type="hidden" id="id" name="id" value="{$course.id}">
-        <input type="hidden" id="action-url" name="action" value="{:U('course/update')}">
-        <button type="submit" class="btn btn-default submit">提交</button>
+        <input type="hidden" id="course-status" name="status" value="{$course.status}">
+        <button type="submit" class="btn btn-default appr-success">通过</button>
+        <button type="submit" class="btn btn-default appr-fail">未通过</button>
     </form>
 </div>
 <!-- 配置文件 -->
