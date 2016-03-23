@@ -12,7 +12,8 @@ require.config({
     	login:'app/login',
     	utils:'app/utils',
     	category:'app/category',
-    	post:'app/post'
+    	post:'app/post',
+    	course:'app/course'
     }
 });
 
@@ -21,10 +22,11 @@ require.config({
     	v.init();
     });
 });*/
-require(['app', 'verify', 'login', 'category', 'post', 'jquery', 'bootstrap'],function(a, v, l, c, p){
+require(['app', 'verify', 'login', 'category', 'post','course', 'jquery', 'bootstrap'],function(a, v, l, c, p, cs){
 	a.init();	
 	v.init();
     l.init();
     c.init();
     p.init();
+    cs.init();
 });

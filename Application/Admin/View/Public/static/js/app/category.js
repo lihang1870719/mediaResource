@@ -6,6 +6,11 @@ define(['jquery', 'utils'], function($, utils) {
   return {
     init: function() {
 		var container = $('.category');	
+		
+		$(container).on('click', '.model-btn', function(){
+			$('#myModal').modal('toggle')
+		});
+		
 		$(container).on('click', '.submit', function(event){
 
 		   	//阻止表单默认提交事件
@@ -24,7 +29,7 @@ define(['jquery', 'utils'], function($, utils) {
 		    var url = $('#action-url').val();
 		    $.post(url, data, function(msg){
 			    if(msg.info == 'ok') {
-			    	alert(msg.info);
+			    	//alert(msg.info);
 			    	window.location.href = msg.callback;
 			    } else {
 			    	alert(msg.info);

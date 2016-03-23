@@ -1,0 +1,43 @@
+<include file="Public/header" title="编辑课程" />
+<div id="page-wrapper" class="course">
+    <form method="post" action="{:U('course/update?id=')}{$category.id}">
+        <div class="form-group">
+            <label for="course-title">课程标题</label>
+            <input type="text" name="title" class="form-control" value="{$course.title}" id="course-title" placeholder="输入课程标题">
+        </div>
+        <div class="form-group">
+            <label for="course-cate">课程分类</label>
+            <select name="cate_id" id="course-cate" class="form-control">
+                <foreach name="category" item="v">
+                    <option value="{$v.id}" <?php if($post['cate_id'] == $v['id']) {echo 'selected="selected"' ;}?>>{$v.html} {$v.title}</option>
+                </foreach>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="course-link">课程地址</label>
+            <input type="text" name="link" class="form-control" value="{$course.link}" id="course-link" placeholder="输入课程地址">
+        </div>
+        <div class="form-group">
+            <label for="course-content">课程内容</label>
+            <script id="course-content" name="content" type="text/plain">{$course.content|htmlspecialchars_decode}</script>
+        </div>
+        <input type="hidden" id="id" name="id" value="{$course.id}">
+        <button type="submit" class="btn btn-default submit">提交</button>
+    </form>
+</div>
+<!-- 配置文件 -->
+<script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.all.js"></script>
+<!-- 实例化编辑器 -->
+<script type="text/javascript">
+    var ue = UE.getEditor('course-content',{
+        toolbars: [
+            ['fullscreen', 'source', 'undo', 'redo','bold', 'italic', 'underline','fontborder', 'strikethrough', '|','simpleupload', 'insertimage','attachment','emotion','link','unlink', '|', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote','searchreplace', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc'],
+            ['inserttable','insertrow', 'insertcol','mergeright', 'mergedown','deleterow', 'deletecol','splittorows','splittocols', 'splittocells','deletecaption','inserttitle', 'mergecells', 'deletetable','insertparagraphbeforetable', 'paragraph','fontsize','fontfamily']
+        ],
+        initialFrameHeight:500,
+        zIndex:100
+    });
+</script>
+<include file="Public/footer" />

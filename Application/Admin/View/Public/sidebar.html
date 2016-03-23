@@ -7,7 +7,7 @@
         <a href="{:U('course/index')}"><i class="fa fa-files-o"></i> 课程管理</a>
     </li>
     <li class="dropdown">
-        <a href="{:U('live/index')}"><i class="fa fa-desktop"></i> 直播管理 </a>
+        <a href="{:U('live/index')}"><i class="fa fa-desktop"></i> 直播管理</a>
     </li>
     <li class="dropdown">
         <a href="{:U('post/index')}"><i class="fa fa-edit"></i> 文章管理</a>
@@ -16,10 +16,31 @@
         <a href="{:U('comments/index')}"><i class="fa fa-comments"></i> 留言管理</a>  
     </li>
     <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog"></i> 系统设置 <b class="caret"></b></a> 
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog"></i> 系统管理 <b class="caret"></b></a> 
         <ul class="dropdown-menu">
             <li class="dropdown"><a href="{:U('role/index')}">管理员分组列表</a></li>
             <li class="dropdown"><a href="{:U('admin/index')}">管理员列表</a></li>
         </ul> 
     </li>
 </ul>
+
+<!-- <ul class="nav navbar-nav side-nav">
+	<foreach name="sidebar" item="m">
+		<if condition="($m.pid eq 0) AND !empty($m.module)">
+			<li class="dropdown">
+        		<a href="{:U('$m.module/index')}"><i class="fa $m.icon"></i> {$m.name}</a>
+        	</li>
+        <elseif condition="($m.pid eq 0) AND empty($m.module)">
+            <li class="dropdown">
+		        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa $m.icon"></i> {$m.name} <b class="caret"></b></a> 
+		        <ul class="dropdown-menu">
+		        <foreach name="sidebar" item="sb">
+		        	<if condition="($sb.pid eq $m.id)">
+				            <li class="dropdown"><a href="{:U('$sb.module/index')}">{$sb.name}</a></li>
+				    </if>
+		        </foreach>
+		 		</ul>
+		    </li>	
+		</if>
+	</foreach>
+</ul> -->

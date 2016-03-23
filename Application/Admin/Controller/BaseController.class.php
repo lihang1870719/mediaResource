@@ -8,8 +8,14 @@ class BaseController extends Controller{
     public function __construct()
     {
         parent::__construct();
+        $this->sidebar();
     }
-
+    
+    public function sidebar()
+    {
+        $sidebar = M("RoleModule")->where("is_delete=0 and is_effect=1")->order("module asc")->select();
+        $this->assign("sidebar",$sidebar);
+    }
 
     protected function error($message,$ajax = 0)
     {

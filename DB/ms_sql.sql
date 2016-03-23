@@ -161,10 +161,11 @@ CREATE TABLE IF NOT EXISTS `ms_course` (
 	`time` varchar(11) DEFAULT '0' COMMENT '课程总时长',
 	`create_at` varchar(11) DEFAULT '0',
 	`update_at` varchar(11) DEFAULT '0',
-	`description` varchar(255) DEFAULT NULL COMMENT '课程或者章节简介',
+	`content` text COMMENT '课程或者章节简介',
 	`cate_id` int(11) DEFAULT NULL COMMENT'分类',
 	`user_id` int(11) DEFAULT NULL COMMENT '对应的编辑者',
 	`status` tinyint(1) DEFAULT '0' COMMENT '课程状态 0：审批中，1：直播中，2：可点播',
+	`type` tinyint(1) DEFAULT '1' COMMENT '课程类型 1:普通,2:置顶,3:热门,4:推荐',
 	PRIMARY KEY(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
