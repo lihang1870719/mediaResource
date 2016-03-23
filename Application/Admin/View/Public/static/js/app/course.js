@@ -15,7 +15,7 @@ define(['jquery', 'utils'], function($, utils){
 						'pid': $('#course-pid').val(),
 						'link' : $('#course-link').val(),
 						'content': $('#course-content').val(),
-						'type': $('#type').val()
+						'type': $("input[name=type]:checked").val()
 				};
 				var status = $('#course-status').val();
 				if ($(event.target).hasClass('appr-success')) {
@@ -25,6 +25,8 @@ define(['jquery', 'utils'], function($, utils){
 					} else if (status == 3) {
 						//审批通过，可以开始点播
 						data.status = 4;
+					} else {
+						data.status = status;
 					}
 				} else {
 					data.status = 5;

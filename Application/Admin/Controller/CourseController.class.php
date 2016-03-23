@@ -98,14 +98,13 @@ class CourseController extends CommonController {
         if (IS_POST) {
             $model = D("course");
             $status = I('post.status');
-            if($status == 0) {
+            if($status == 5) {
                 $this->ajaxReturn(array('info' => "审核未通过，请修改课程标题"));
             } else {
                 $data = $model->create();
                 if (!$data) {
                     $this->ajaxReturn(array('info' => $model->getError()));
                 }else{
-                    $data['status'] = 1;
                     if ($model->save()) {
                         $message = array(
                             'info' => 'ok',
