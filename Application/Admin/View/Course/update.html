@@ -9,7 +9,7 @@
             <label for="course-cate">课程分类</label>
             <select name="cate_id" id="course-cate" class="form-control">
                 <foreach name="category" item="v">
-                    <option value="{$v.id}" <?php if($post['cate_id'] == $v['id']) {echo 'selected="selected"' ;}?>>{$v.html} {$v.title}</option>
+                    <option value="{$v.id}" <?php if($course['cate_id'] == $v['id']) {echo 'selected="selected"' ;}?>>{$v.html} {$v.title}</option>
                 </foreach>
             </select>
         </div>

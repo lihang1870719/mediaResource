@@ -57,8 +57,15 @@ define(['jquery', 'utils'], function($, utils){
 						'content': ue.getContent()
 				};
 				if (data.title == "") {
-					alert("请填写文章标题");
+					alert("请填写课程标题");
 					return;
+				}
+				var imageSrc = $('.imgSrc').text();
+				var imageDesp =  $('.percentage').text();
+				if(imageSrc != "" && imageDesp == "上传完毕") {
+					data['image'] = 'uploads/' + imageSrc;
+				} else {
+					alert("请先上传课程图片");
 				}
 				var id = $('#id').val();
 				if(id != undefined) {

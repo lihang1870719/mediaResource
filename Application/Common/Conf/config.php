@@ -1,7 +1,7 @@
 <?php
 return array(
 	//'配置项'=>'配置值'
-    'MODULE_ALLOW_LIST' =>    array('Home','Admin'),
+    'MODULE_ALLOW_LIST' =>    array('Home','Admin','App'),
     'SHOW_PAGE_TRACE'   =>  true,
     'LOAD_EXT_CONFIG'   => 'db',
     'URL_CASE_INSENSITIVE'  =>  true,  //url不区分大小写

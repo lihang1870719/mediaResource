@@ -1242,7 +1242,7 @@
   };
   _globalConfig.hoverClass = "zeroclipboard-is-hover";
   _globalConfig.activeClass = "zeroclipboard-is-active";
-  if (typeof define === "function" && define.amd) {
+/*  if (typeof define === "function" && define.amd) {
     define(function() {
       return ZeroClipboard;
     });
@@ -1250,7 +1250,8 @@
     module.exports = ZeroClipboard;
   } else {
     window.ZeroClipboard = ZeroClipboard;
-  }
+  }*/
+  window.ZeroClipboard = ZeroClipboard;
 })(function() {
   return this;
 }());

@@ -1,8 +1,90 @@
 <?php
 namespace App\Controller;
 use Think\Controller;
-class IndexController extends Controller {
+/**
+ * api 统一地址：http://xxx/app/index/funtionname
+ * 例如 获得所有分类：
+ * http://hostname/app/index/getCategory
+ * @author lh
+ *
+ */
+class IndexController extends BaseController {
     public function index(){
-        $this->show('<style type="text/css">*{ padding: 0; margin: 0; } div{ padding: 4px 48px;} body{ background: #fff; font-family: "微软雅黑"; color: #333;font-size:24px} h1{ font-size: 100px; font-weight: normal; margin-bottom: 12px; } p{ line-height: 1.8em; font-size: 36px } a,a:hover{color:blue;}</style><div style="padding: 24px 48px;"> <h1>:)</h1><p>欢迎使用 <b>ThinkPHP</b>！</p><br/>版本 V{$Think.version}</div><script type="text/javascript" src="http://ad.topthink.com/Public/static/client.js"></script><thinkad id="ad_55e75dfae343f5a1"></thinkad><script type="text/javascript" src="http://tajs.qq.com/stats?sId=9347272" charset="UTF-8"></script>','utf-8');
+        //验证客户端的合法性
+        $this->check();
+        $this->returnApiError( '什么也没查到(+_+)！'); 
+    }
+    
+    /**
+     * 分类api
+     *
+     */
+    public function getCategory(){
+        //检查是否通过post方法得到数据
+        //$field[] = 'id,pid,name,title,keywords,description';
+        $info = M('Category')->select();       
+        if($info) {
+            $this->returnApiSuccess('',$info);
+        } else {
+            $this->returnApiError( '什么也没查到(+_+)！');            
+        }
+    }
+    
+    /*＊
+     * 课程api 
+     */
+    public function getCourse(){
+        $info = M('Course')->select();
+        if($info) {
+            $this->returnApiSuccess('',$info);
+        } else {
+            $this->returnApiError( '什么也没查到(+_+)！');
+        }
+    }
+    
+    /**
+     * 直播api
+     */
+    public function getLive(){
+        $map['status'] = array('in', '1,2,3,4');
+        $info = M('Course')->where($map)->select();
+        if($info) {
+            $this->returnApiSuccess('',$info);
+        } else {
+            $this->returnApiError( '什么也没查到(+_+)！');
+        } 
+    }
+    
+    /**
+     * 文章api
+     */
+    public function getPost(){
+        $info = M('Post')->select();
+        if($info) {
+            $this->returnApiSuccess('',$info);
+        } else {
+            $this->returnApiError( '什么也没查到(+_+)！');
+        }
+    }
+    
+    /**
+     * 轮播api
+     */
+    public function getCarousel(){
+        
+    }
+    
+    /**
+     * 留言api
+     */
+    public function getComments(){
+        
+    }
+    
+    /**
+     * 用户api
+     */
+    public function getUserInfo(){
+        
     }
 }

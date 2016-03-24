@@ -1,9 +1,13 @@
 # mediaResource
 thinkphp + mysql +bootstrap
 
-## help->welcome->安装插件
-
 ## 程序目录 Application,Public,Thinkphp,DB
+
+### Application下有3个大的模块
+
+- Admin模块：后台管理员，包括分类管理，用户管理，
+- App模块： 移动app接口
+- Home模块：注册前端用户
 
 ## 程序入口文件是index.php与m.php
 
