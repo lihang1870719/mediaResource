@@ -31,19 +31,24 @@ class AdminController extends CommonController {
             $data = $model->create();
             if(M("Admin")->where("username='".$data['username']."'")->count()>0)
             {
-                $this->error("管理员账户已存在");
+                $this->ajaxReturn(array('info' => "管理员账户已存在"));
+                exit();
             }
             if (!$data) {
                 // 如果创建失败 表示验证没有通过 输出错误提示信息
-                $this->error($model->getError());
+                $this->ajaxReturn(array('info' => $model->getError()));
                 exit();
             } else {
                 $data['password'] = md5($data['password']);
                 $data['login_time'] = date("Y-m-d h:i:s",time());
                 if ($model->add($data)) {
-                    $this->success("管理员添加成功", U('admin/index'));
+                    $message = array(
+                        'info' => 'ok',
+                        'callback' => U('admin/index')
+                    );
+                    $this->ajaxReturn($message);
                 } else {
-                    $this->error("分类添加失败");
+                    $this->ajaxReturn(array('info' => "管理员添加失败"));
                 }
             }
         }
@@ -57,22 +62,26 @@ class AdminController extends CommonController {
     {
         //默认显示添加表单
         if (!IS_POST) {
-            $model = M('category')->find(I('id'));
-    
-            $this->assign('cate',getSortedCategory(M('category')->select()));
-            $this->assign('model',$model);
+            $group = M('role')->select();
+            $admin = M('admin')->find(I('id'));
+            $this->assign('admin',$admin);
+            $this->assign('group',$group);
             $this->display();
         }
         if (IS_POST) {
-            $model = D("Category");
+            $model = D("admin");
             if (!$model->create()) {
-                $this->error($model->getError());
+                $this->ajaxReturn(array('info' => $model->getError()));
             }else{
                 //   dd(I());die;
                 if ($model->save()) {
-                    $this->success("分类更新成功", U('category/index'));
+                    $message = array(
+                        'info' => 'ok',
+                        'callback' => U('admin/index')
+                    );
+                    $this->ajaxReturn($message);
                 } else {
-                    $this->error("分类更新失败");
+                    $this->ajaxReturn(array('info' => "管理员更新失败"));
                 }
             }
         }
@@ -84,23 +93,16 @@ class AdminController extends CommonController {
      */
     public function delete($id)
     {
-        $model = M('category');
-        //查询属于这个分类的文章
-        $posts = M('post')->where("cate_id= %d",$id)->select();
-        if($posts){
-            $this->error("禁止删除含有文章的分类");
-        }
-        //禁止删除含有子分类的分类
-        $hasChild = $model->where("pid= %d",$id)->select();
-        if($hasChild){
-            $this->error("禁止删除含有子分类的分类");
-        }
-        //验证通过
+        $model = M('admin');
         $result = $model->delete(intval($id));
         if($result){
-            $this->success("分类删除成功", U('category/index'));
+            $message = array(
+                'info' => 'ok',
+                'callback' => U('admin/index')
+            );
+            $this->ajaxReturn($message);
         }else{
-            $this->error("分类删除失败");
+            $this->ajaxReturn(array('info' => "管理员删除失败"));
         }
     }
 }

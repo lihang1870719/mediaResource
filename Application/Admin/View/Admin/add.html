@@ -1,17 +1,21 @@
 <include file="Public/header" title="新增管理员" />
-<div id="page-wrapper">
-    <form method="post" action="{:U('admin/add')}">
+<div id="page-wrapper" class="admin">
+    <form>
         <div class="form-group">
-            <label for="aa">管理员帐号</label>
-            <input type="text" name="username" class="form-control" id="aa" placeholder="输入管理员帐号">
+            <label for="admin-username">管理员帐号</label>
+            <input type="text" name="username" class="form-control" id="admin-username" placeholder="输入管理员帐号">
         </div>
         <div class="form-group">
-            <label for="cc">管理员密码</label>
-            <input type="password" name="password" class="form-control" id="cc" placeholder="">
+            <label for="admin-password">管理员密码</label>
+            <input type="password" name="password" class="form-control" id="admin-password" placeholder="">
         </div>
         <div class="form-group">
-            <label for="bb">管理员分组</label>
-            <select name="role_id" id="bb" class="form-control">
+            <label for="admin-cf-pasword">确认管理员密码</label>
+            <input type="password" name="confirm-password" class="form-control" id="admin-cf-pasword" placeholder="">
+        </div>
+        <div class="form-group">
+            <label for="admin-role">管理员分组</label>
+            <select name="role_id" id="admin-role" class="form-control">
                 <option value="">未选择</option>
                 <foreach name="group" item="v">
                     <option value="{$v.id}">{$v.name}</option>
@@ -19,15 +23,16 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="dd">状态</label>
+            <label for="admin-status">状态</label>
         	<label class="radio-inline">
-              <input type="radio" name="is_effect" id="type" value="1" checked="checked">有效
+              <input type="radio" name="is_effect" id="admin-status" value="1" checked="checked">有效
             </label>
             <label class="radio-inline">
-              <input type="radio" name="is_effect" id="type" value="0">无效
+              <input type="radio" name="is_effect" id="admin-status" value="0">无效
             </label>
         </div>
-        <button type="submit" class="btn btn-default">添加</button>
+                <input type="hidden" id="action-url" value="{:U('admin/add')}">
+        <button type="submit" class="btn btn-default submit">添加</button>
     </form>
 </div>
 <include file="Public/footer" />

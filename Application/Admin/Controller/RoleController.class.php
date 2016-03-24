@@ -75,9 +75,13 @@ class RoleController extends CommonController
                     $access_item['module_id'] = $item[0];
                     M("RoleAccess")->add($access_item);
                 }
-                $this->success(L("INSERT_SUCCESS"),U('role/index'));
+                $message = array(
+                    'info' => 'ok',
+                    'callback' => U('role/index')
+                );
+                $this->ajaxReturn($message);
             } else {
-                $this->error(L("INSERT_FAILED"));
+                $this->ajaxReturn(array('info' => "更新管理员组失败"));
             }          
         }
     }
@@ -88,13 +92,17 @@ class RoleController extends CommonController
         $admin = M('admin');
         $exist = $admin->where('role_id = %d', $id)->find();
         if($exist) {
-            $this->error("删除失败，该组还存在管理员，请先删除管理员或修改管理员分组");
+            $this->ajaxReturn(array('info' => "删除失败，该组还存在管理员，请先删除管理员或修改管理员分组"));
         }
         $result = $model->where("id= %d",$id)->delete();
         if($result){
-            $this->success("删除成功", U('role/index'));
+            $message = array(
+                'info' => 'ok',
+                'callback' => U('role/index')
+            );
+            $this->ajaxReturn($message);
         }else{
-            $this->error("删除失败");
+            $this->ajaxReturn(array('info' => "删除失败"));
         }
     }
     
@@ -129,9 +137,13 @@ class RoleController extends CommonController
                         $access_item['module_id'] = $item[0];
                         M("RoleAccess")->add($access_item);
                     }
-                    $this->success(L("INSERT_SUCCESS"),U('role/index'));
+                    $message = array(
+                        'info' => 'ok',
+                        'callback' => U('role/index')
+                    );
+                    $this->ajaxReturn($message);
                 } else {
-                    $this->error(L("INSERT_FAILED"));
+                    $this->ajaxReturn(array('info' => "新增管理组失败"));
                 }
             }
         
