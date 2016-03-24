@@ -13,7 +13,7 @@ class BaseController extends Controller{
     
     public function sidebar()
     {
-        $sidebar = M("RoleModule")->where("is_delete=0 and is_effect=1")->order("module asc")->select();
+        $sidebar = M("RoleNav")->where("is_delete=0 and is_effect=1")->order("sort asc")->select();
         $this->assign("sidebar",$sidebar);
     }
 

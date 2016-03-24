@@ -1,4 +1,4 @@
-<ul class="nav navbar-nav side-nav">
+<!-- <ul class="nav navbar-nav side-nav">
     <li><a href="{:U('index/index')}"><i class="fa fa-dashboard"></i> 系统首页</a></li>
     <li class="dropdown">
         <a href="{:U('category/index')}"><i class="fa fa-reorder"></i> 分类管理</a>
@@ -25,25 +25,29 @@
             <li class="dropdown"><a href="{:U('admin/index')}">管理员列表</a></li>
         </ul> 
     </li>
-</ul>
+</ul> -->
 
-<!-- <ul class="nav navbar-nav side-nav">
+<ul class="nav navbar-nav side-nav sidebar">
 	<foreach name="sidebar" item="m">
-		<if condition="($m.pid eq 0) AND !empty($m.module)">
-			<li class="dropdown">
-        		<a href="{:U('$m.module/index')}"><i class="fa $m.icon"></i> {$m.name}</a>
-        	</li>
-        <elseif condition="($m.pid eq 0) AND empty($m.module)">
-            <li class="dropdown">
-		        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa $m.icon"></i> {$m.name} <b class="caret"></b></a> 
+	   	<if condition="($m['pid'] eq 0) AND empty($m['module'])">
+           <li class="dropdown">
+		        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa {$m.icon}"></i> {$m.name} <b class="caret"></b></a> 
 		        <ul class="dropdown-menu">
 		        <foreach name="sidebar" item="sb">
-		        	<if condition="($sb.pid eq $m.id)">
-				            <li class="dropdown"><a href="{:U('$sb.module/index')}">{$sb.name}</a></li>
+		        	<if condition="($sb['pid'] eq $m['id'])">
+				            <li class="dropdown"><a href='{:U($sb["module"]."/index")}' class="menu-action">{$sb.name}</a></li>
 				    </if>
 		        </foreach>
 		 		</ul>
-		    </li>	
+	    	</li>
 		</if>
+		<if condition="($m['pid'] eq 0) AND !empty($m['module'])">
+			<li class="dropdown">
+        		<a href='{:U($m["module"]."/index")}' class="menu-action">
+        			<i class="fa {$m.icon}"></i> 
+        			{$m.name}
+        		</a>
+        	</li>
+        </if>
 	</foreach>
-</ul> -->
+</ul>

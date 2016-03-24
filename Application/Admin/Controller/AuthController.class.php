@@ -9,7 +9,7 @@ class AuthController extends BaseController{
     public function __construct()
     {
         parent::__construct();
-        $this->check_autha();
+        $this->check_auth();
     }
     
      public function check_autha(){
@@ -36,34 +36,34 @@ class AuthController extends BaseController{
         if(!check_empty($adm_id) || !check_empty($adm_id)) {
             $this->error('session已过期，请重新登录',U('/Admin/Login/index'));
         }
-        $sql = "select count(*) as c from "."role_node as role_node left join ".
-            "role_module as role_module on role_module.id = role_node.module_id ".
-            " where role_node.action ='".ACTION_NAME."' and role_module.module = '".CONTROLLER_NAME."' ".
-            " and role_node.is_effect = 1 and role_node.is_delete = 0 and role_module.is_effect = 1 and role_module.is_delete = 0 ";
+        $sql = "select count(*) as c from "."ms_role_node as ms_role_node left join ".
+            "ms_role_module as ms_role_module on ms_role_module.id = ms_role_node.module_id ".
+            " where ms_role_node.action ='".ACTION_NAME."' and ms_role_module.module = '".CONTROLLER_NAME."' ".
+            " and ms_role_node.is_effect = 1 and ms_role_node.is_delete = 0 and ms_role_module.is_effect = 1 and ms_role_module.is_delete = 0 ";
         $count = M()->query($sql);
         $count = $count[0]['c'];      
         if($adm_name != $this->DEFALUT_ADMIN && ACTION_NAME!='index' && $count>0)
         {
             //除IndexAction外需验证的权限列表
-            $sql = "select count(*) as c from "."role_node as role_node left join ".
-                "role_access as role_access on role_node.id=role_access.node_id left join ".
-                "role as role on role_access.role_id = role.id left join ".
-                "role_module as role_module on role_module.id = role_node.module_id left join ".
-                "admin as admin on admin.role_id = role.id ".
-                " where admin.id = ".$adm_id." and role_node.action ='".ACTION_NAME."' and role_module.module = '".CONTROLLER_NAME."' ".
-                " and role_node.is_effect = 1 and role_node.is_delete = 0 and role_module.is_effect = 1 and role_module.is_delete = 0 and role.is_effect = 1 and role.is_delete = 0";
+            $sql = "select count(*) as c from "."ms_role_node as ms_role_node left join ".
+                "ms_role_access as ms_role_access on ms_role_node.id=ms_role_access.node_id left join ".
+                "ms_role as ms_role on ms_role_access.role_id = ms_role.id left join ".
+                "ms_role_module as ms_role_module on ms_role_module.id = ms_role_node.module_id left join ".
+                "ms_admin as ms_admin on ms_admin.role_id = ms_role.id ".
+                " where ms_admin.id = ".$adm_id." and ms_role_node.action ='".ACTION_NAME."' and ms_role_module.module = '".CONTROLLER_NAME."' ".
+                " and ms_role_node.is_effect = 1 and ms_role_node.is_delete = 0 and ms_role_module.is_effect = 1 and ms_role_module.is_delete = 0 and ms_role.is_effect = 1 and ms_role.is_delete = 0";
                 $count = M()->query($sql);
                 $count = $count[0]['c'];
                 if($count == 0)
                 {
                     //节点授权不足，开始判断是否有模块授权
-                    $module_sql = "select count(*) as c from "."role_access as role_access left join ".
-                        "role as role on role_access.role_id = role.id left join ".
-                        "role_module as role_module on role_module.id = role_access.module_id left join ".
-                        "admin as admin on admin.role_id = role.id ".
-                        " where admin.id = ".$adm_id." and role_module.module = '".CONTROLLER_NAME."' ".
-                        " and role_access.node_id = 0".
-                        " and role_module.is_effect = 1 and role_module.is_delete = 0 and role.is_effect = 1 and role.is_delete = 0";                        
+                    $module_sql = "select count(*) as c from "."ms_role_access as ms_role_access left join ".
+                        "ms_role as ms_role on ms_role_access.role_id = ms_role.id left join ".
+                        "ms_role_module as ms_role_module on ms_role_module.id = ms_role_access.module_id left join ".
+                        "ms_admin as ms_admin on ms_admin.role_id = ms_role.id ".
+                        " where ms_admin.id = ".$adm_id." and ms_role_module.module = '".CONTROLLER_NAME."' ".
+                        " and ms_role_access.node_id = 0".
+                        " and ms_role_module.is_effect = 1 and ms_role_module.is_delete = 0 and ms_role.is_effect = 1 and ms_role.is_delete = 0";                        
                         $module_count = M()->query($module_sql);
                         $module_count = $module_count[0]['c'];
                         if($module_count == 0)

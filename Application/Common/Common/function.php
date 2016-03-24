@@ -1,5 +1,11 @@
 <?php 
 
+function getHref($module)
+{
+    $result = "{:U('".$module."/index')}";
+    return $result;
+}
+
 function dd($data)
 {
 	echo "<pre>";

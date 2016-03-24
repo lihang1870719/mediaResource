@@ -1,0 +1,33 @@
+<include file="Public/header" title="新增管理员" />
+<div id="page-wrapper">
+    <form method="post" action="{:U('admin/add')}">
+        <div class="form-group">
+            <label for="aa">管理员帐号</label>
+            <input type="text" name="username" class="form-control" id="aa" placeholder="输入管理员帐号">
+        </div>
+        <div class="form-group">
+            <label for="cc">管理员密码</label>
+            <input type="password" name="password" class="form-control" id="cc" placeholder="">
+        </div>
+        <div class="form-group">
+            <label for="bb">管理员分组</label>
+            <select name="role_id" id="bb" class="form-control">
+                <option value="">未选择</option>
+                <foreach name="group" item="v">
+                    <option value="{$v.id}">{$v.name}</option>
+                </foreach>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="dd">状态</label>
+        	<label class="radio-inline">
+              <input type="radio" name="is_effect" id="type" value="1" checked="checked">有效
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="is_effect" id="type" value="0">无效
+            </label>
+        </div>
+        <button type="submit" class="btn btn-default">添加</button>
+    </form>
+</div>
+<include file="Public/footer" />
