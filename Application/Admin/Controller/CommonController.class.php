@@ -11,7 +11,7 @@ class CommonController extends AuthController{
     
     public function index($view = false) {
         //列表过滤器，生成查询Map对象
-        $map = $this->_search ();
+        $map = $this->_search ($view);
         //追加默认参数
         if($this->get("default_map"))
         $map = array_merge($map,$this->get("default_map"));
@@ -46,12 +46,16 @@ class CommonController extends AuthController{
      * @throws ThinkExecption
      +----------------------------------------------------------
      */
-    protected function _search($name = '') {
+    protected function _search($view, $name = '') {
         //生成查询条件
         if (empty ( $name )) {
             $name = CONTROLLER_NAME;
         }
-        $name=CONTROLLER_NAME;
+        if ($view) {
+            $name = CONTROLLER_NAME.'View';
+        } else {
+            $name=CONTROLLER_NAME;
+        }
         $model = D ( $name );
         $map = array ();
         foreach ( $model->getDbFields () as $key => $val ) {

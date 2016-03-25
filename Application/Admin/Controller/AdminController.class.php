@@ -21,7 +21,7 @@ class AdminController extends CommonController {
     {
         //默认显示添加表单
         if (!IS_POST) {
-            $model = M('role')->select();
+            $model = M('role')->where('is_effect = 1')->select();
             $this->assign('group',$model);
             $this->display();
         }
@@ -62,7 +62,7 @@ class AdminController extends CommonController {
     {
         //默认显示添加表单
         if (!IS_POST) {
-            $group = M('role')->select();
+            $group = M('role')->where('is_effect = 1')->select();
             $admin = M('admin')->find(I('id'));
             $this->assign('admin',$admin);
             $this->assign('group',$group);
@@ -70,11 +70,13 @@ class AdminController extends CommonController {
         }
         if (IS_POST) {
             $model = D("admin");
-            if (!$model->create()) {
+            $data = $model->create();
+            if (!$data) {
                 $this->ajaxReturn(array('info' => $model->getError()));
             }else{
                 //   dd(I());die;
-                if ($model->save()) {
+                $data['password'] = md5($data['password']);
+                if ($model->save($data)) {
                     $message = array(
                         'info' => 'ok',
                         'callback' => U('admin/index')

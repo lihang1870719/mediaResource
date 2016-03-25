@@ -1,3 +1,61 @@
-<include file="Public:header"  title="留言"/>
+<include file="Public/header" title="轮播列表" />
 
-<include file="Public:footer"/>
+<div id="page-wrapper" class="mobile"> 
+    <div class="row">
+        <div class="col-md-6">
+            <a href="{:U('mobile/add')}" class="btn btn-success">添加轮播</a>
+        </div>
+        <div class="col-md-6">
+            <form action="{:U('mobile/index')}" method="get">
+                <div class="form-group input-group">
+                    <input type="text" class="form-control" name="key" placeholder="输入课程标题搜索">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>课程名称</th>
+                <th>图片地址</th>
+                <th>状态</th>
+                <th>排列顺序</th>
+                <th>操作</th> 
+            </tr>
+        </thead>
+        <tbody>
+        <foreach name="model" item="v">
+            <tr>
+                <td>{$v.id}</td>
+                <td>{$v.title}</td>
+                <td>{$v.image}</td>
+                <td>
+                    <if condition="$v.image_status eq 1"><span class="label label-info">有效</span>
+                    <elseif condition="$v.image_status eq 0" /><span class="label label-warning">无效</span>
+                    </if>
+                </td>
+                <td>                    
+                	<if condition="$v.image_sort eq 0"><span class="label label-info">未排列</span>
+                    <elseif condition="$v.image_sort eq 1" /><span class="label label-warning">第一张</span>
+                    <elseif condition="$v.image_sort eq 2" /><span class="label label-warning">第二张</span>
+                    <elseif condition="$v.image_sort eq 3" /><span class="label label-warning">第三张</span>
+                    </if>
+                </td>   
+                <td>
+	                <a href="{:U('mobile/update',array('id' => $v['id']))}">编辑</a> | 
+	                <input type="hidden" value="{:U('mobile/delete',array('id' => $v['id']))}" class="delete-url">
+	                <a href="#" style="color:red;" class="delete-item">删除</a>
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    {$page}
+</div>
+
+
+<include file="Public/footer" />

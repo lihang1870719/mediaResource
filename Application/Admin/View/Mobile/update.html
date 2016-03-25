@@ -1,0 +1,48 @@
+<include file="Public/header" title="编辑轮播" />
+<div id="page-wrapper" class="mobile">
+	<table class="table table-hover table-striped">
+        <tbody>
+        <tr>
+        	<td>课程名称</td>
+        	<td>{$course.title}</td>
+        </tr>
+        <tr>
+        	<td>轮播状态</td>
+        	<td>
+				<label class="radio-inline">
+				  <input type="radio" name="image_status"  value="0" <if condition="$course.image_status eq 0">checked="checked"</if> >无效
+				</label>
+				<label class="radio-inline">
+				  <input type="radio" name="image_status" value="1" <if condition="$course.image_status eq 1">checked="checked"</if> >有效
+				</label>
+        	</td>
+        </tr>
+        <tr>
+        	<td>轮播次序</td>
+        	<td>
+        	    <label class="radio-inline">
+	              <input type="radio" name="image_sort" value="0" <if condition="$course.image_sort eq 0">checked="checked"</if> >未排列
+	            </label>
+        	    <label class="radio-inline">
+	              <input type="radio" name="image_sort" value="1" <if condition="$course.image_sort eq 1">checked="checked"</if> >第一位
+	            </label>
+	            <label class="radio-inline">
+	              <input type="radio" name="image_sort" value="2" <if condition="$course.image_sort eq 2">checked="checked"</if> >第二位
+	            </label>
+	            <label class="radio-inline">
+	              <input type="radio" name="image_sort" value="3" <if condition="$course.image_sort eq 3">checked="checked"</if> >第三位
+	            </label>
+        	</td>
+        </tr>
+        <tr>
+        	<td>操作</td>
+        	<td>
+              	<input type="hidden" id ="id" value ="{$course.id}">
+		        <input type="hidden" id="action-url" name="action" value="{:U('mobile/update')}">
+		        <button type="submit" class="btn btn-default submit">提交</button>
+        	</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<include file="Public/footer" />

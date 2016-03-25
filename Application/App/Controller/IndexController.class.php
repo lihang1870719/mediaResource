@@ -71,7 +71,12 @@ class IndexController extends BaseController {
      * 轮播api
      */
     public function getCarousel(){
-        
+        $info = M('Course')->where('image_sort != 0 AND image_status = 1')->select();
+        if($info) {
+            $this->returnApiSuccess('',$info);
+        } else {
+            $this->returnApiError( '什么也没查到(+_+)！');
+        }
     }
     
     /**
@@ -86,5 +91,31 @@ class IndexController extends BaseController {
      */
     public function getUserInfo(){
         
+    }
+    
+    /**
+     * 课程搜索接口
+     */
+    public function searchCourse(){
+        $map['title'] = array('like','%'.trim($_REQUEST['key']).'%');
+        $info = M('Course')->where($map)->select();
+        if($info) {
+            $this->returnApiSuccess('',$info);
+        } else {
+            $this->returnApiError( '什么也没查到(+_+)！');
+        }
+    }
+    
+    /**
+     * 文章搜索接口
+     */
+    public function searchPost(){
+        $map['title'] = array('like','%'.trim($_REQUEST['key']).'%');
+        $info = M('Post')->where($map)->select();
+        if($info) {
+            $this->returnApiSuccess('',$info);
+        } else {
+            $this->returnApiError( '什么也没查到(+_+)！');
+        }
     }
 }

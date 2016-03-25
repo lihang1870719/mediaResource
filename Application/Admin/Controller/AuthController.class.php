@@ -33,7 +33,7 @@ class AuthController extends BaseController{
         $adm_id = session('admin_id');
         //开始验证权限，当管理员名称不为默认管理员时
         //开始验证模块是否需要授权
-        if(!check_empty($adm_id) || !check_empty($adm_id)) {
+        if(!check_empty($adm_id) || !check_empty($adm_name)) {
             $this->error('session已过期，请重新登录',U('/Admin/Login/index'));
         }
         $sql = "select count(*) as c from "."ms_role_node as ms_role_node left join ".
@@ -68,7 +68,7 @@ class AuthController extends BaseController{
                         $module_count = $module_count[0]['c'];
                         if($module_count == 0)
                         {
-                                $this->error(L("NO_AUTH"),$ajax);
+                                $this->error(L("NO_AUTH"));
                         }
                 }
         }

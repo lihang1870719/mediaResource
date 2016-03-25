@@ -30,7 +30,11 @@
             <tr>
                 <td>{$v.id}</td>
                 <td>{$v.name}</td>
-                <td>{$v.is_effect}</td>
+                <td>
+                    <if condition="$v.is_effect eq 1"><span class="label label-info">有效</span>
+                    <elseif condition="$v.is_effect eq 0" /><span class="label label-warning">无效</span>
+                    </if>
+                </td>
                 <td>
                     <a href="{:U('role/update',array('id' => $v['id']))}">编辑</a> | 
 	                <input type="hidden" value="{:U('role/delete',array('id' => $v['id']))}" class="delete-url">

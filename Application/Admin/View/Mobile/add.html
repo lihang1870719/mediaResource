@@ -1,0 +1,41 @@
+<include file="Public/header" title="新增轮播" />
+<div id="page-wrapper" class="mobile">
+    <form>
+        <div class="form-group">
+            <label for="course-title">选择课程名称</label>
+            <select name="title" id="course-title" class="form-control">
+                <option value="">请选择课程</option>
+                <foreach name="cate" item="v">
+                    <option value="{$v.id}">{$v.html} {$v.title}</option>
+                </foreach>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>轮播状态</label>
+            <label class="radio-inline">
+              <input type="radio" name="image_status"  value="0">无效
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="image_status" value="1">有效
+            </label>
+        </div>
+        <div class="form-group">
+            <label>轮播顺序</label>
+             <label class="radio-inline">
+              <input type="radio" name="image_sort" value="0" checked="checked">未选择
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="image_sort" value="1">第一位
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="image_sort" value="2">第二位
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="image_sort" value="3">第三位
+            </label>
+        </div>
+        <input type="hidden" id="action-url" name="action" value="{:U('mobile/add')}">
+        <button type="submit" class="btn btn-default submit">提交</button>
+    </form>
+</div>
+<include file="Public/footer" />
