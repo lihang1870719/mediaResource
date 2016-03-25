@@ -36,6 +36,10 @@ api 统一地址：http://xxx/app/index/funtionname
 失败后返回： flag 是Error； msg是指失败的提示信息
 {"flag":"Error","msg":"\u4ec0\u4e48\u4e5f\u6ca1\u67e5\u5230(+_+)\uff01"}
 
+#### 首页接口
+获得移动段首页相关信息，包括轮播，课程列表，分类
+
+地址： http://xxxx/app/index/getIndex
 
 #### 获得所有分类：
 

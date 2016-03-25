@@ -15,6 +15,25 @@ class IndexController extends BaseController {
         $this->returnApiError( '什么也没查到(+_+)！'); 
     }
     
+    /* 
+     * 获得移动段首页相关信息，包括轮播，课程列表，分类
+     * */
+    public function getIndex(){
+        $category = M('Category')->select();
+        $course = M('Course')->select();
+        $carousel = M('Course')->where('image_sort != 0 AND image_status = 1')->select();
+        $info = array(
+            'category' => $category,
+            'course'  => $course,
+            'carousel' => $carousel
+        );
+        if($info) {
+            $this->returnApiSuccess('',$info);
+        } else {
+            $this->returnApiError( '什么也没查到(+_+)！');
+        }
+    }
+    
     /**
      * 分类api
      *
