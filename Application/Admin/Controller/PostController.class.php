@@ -34,15 +34,19 @@ class PostController extends CommonController
             $data = $model->create();
             if (!$data) {
                 // 如果创建失败 表示验证没有通过 输出错误提示信息
-                $this->error($model->getError());
+                $this->ajaxReturn(array('info' => $model->getError()));
                 exit();
             } else {
                 $data['time'] = time();
                 $data['user_id'] = session('admin_id');
                 if ($model->add($data)) {
-                    $this->success("添加成功", U('post/index'));
+                    $message = array(
+                        'info' => 'ok',
+                        'callback' => U('post/index')
+                    );
+                    $this->ajaxReturn($message);
                 } else {
-                    $this->error("添加失败");
+                    $this->ajaxReturn(array('info' => "添加失败"));
                 }
             }
         }
@@ -64,12 +68,48 @@ class PostController extends CommonController
         if (IS_POST) {
             $model = D("Post");
             if (!$model->create()) {
-                $this->error($model->getError());
+                $this->ajaxReturn(array('info' => $model->getError()));
             }else{
                 if ($model->save()) {
-                    $this->success("更新成功", U('post/index'));
+                    $message = array(
+                        'info' => 'ok',
+                        'callback' => U('post/index')
+                    );
+                    $this->ajaxReturn($message);
                 } else {
-                    $this->error("更新失败");
+                    $this->ajaxReturn(array('info' => "更新失败"));
+                }
+            }
+        }
+    }
+    
+    /**
+     * 审核文章信息
+     * @param  [type] $id [文章ID]
+     * @return [type]     [description]
+     */
+    public function approve($id)
+    {
+        //默认显示添加表单
+        if (!IS_POST) {
+            $model = M('post')->where("id= %d",$id)->find();
+            $this->assign("category",getSortedCategory(M('category')->select()));
+            $this->assign('post',$model);
+            $this->display();
+        }
+        if (IS_POST) {
+            $model = D("Post");
+            if (!$model->create()) {
+                $this->ajaxReturn(array('info' => $model->getError()));
+            }else{
+                if ($model->save()) {
+                    $message = array(
+                        'info' => 'ok',
+                        'callback' => U('post/index')
+                    );
+                    $this->ajaxReturn($message);
+                } else {
+                    $this->ajaxReturn(array('info' => "审核失败"));
                 }
             }
         }
@@ -84,9 +124,13 @@ class PostController extends CommonController
         $model = M('post');
         $result = $model->where("id= %d",$id)->delete();
         if($result){
-            $this->success("删除成功", U('post/index'));
+            $message = array(
+                'info' => 'ok',
+                'callback' => U('post/index')
+            );
+            $this->ajaxReturn($message);
         }else{
-            $this->error("删除失败");
+            $this->ajaxReturn(array('info' => "删除失败"));
         }
     }
     

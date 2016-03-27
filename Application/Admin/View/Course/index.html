@@ -33,7 +33,7 @@
         <foreach name="model" item="v">
             <tr>
                 <td>{$v.id}</td>
-                <td>{$v.title}</td>
+                <td>{$v.html} {$v.title}</td>
                 <td>
                     <if condition="$v.type eq 1"><span class="label label-success">普通</span>
                     <elseif condition="$v.type eq 2" /><span class="label label-info">置顶</span>

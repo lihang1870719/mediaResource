@@ -8,11 +8,12 @@
                 <h2>欢迎使用管理后台</h2>
                 <p>1.系统基本功能如下:</p>
                 <ul>
-                    <li>用户管理</li>
-                    <li>用户登陆注册</li>
                     <li>分类管理</li>
                     <li>课程管理</li>
                     <li>直播管理</li>
+                    <li>文章管理</li>
+                    <li>留言笔记管理</li>
+                    <li>移动平台管理</li>                    
                     <li>系统设置</li>
                 </ul>
                 <div class="clearfix"></div>
@@ -22,6 +23,60 @@
     <!-- /.row -->
 
     <div class="row">
+            <div class="col-lg-3">
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <i class="fa fa-files-o fa-5x"></i>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <p class="announcement-heading">{$info.course}</p>
+                            <p class="announcement-text">课程总数</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="{:U('Admin/Course/index')}">
+                    <div class="panel-footer announcement-bottom">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                课程管理
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <i class="fa fa-arrow-circle-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <i class="fa fa-edit fa-5x"></i>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <p class="announcement-heading">{$info.post}</p>
+                            <p class="announcement-text">文章总数</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="{:U('Admin/Post/index')}">
+                    <div class="panel-footer announcement-bottom">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                文章管理
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <i class="fa fa-arrow-circle-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
         <div class="col-lg-3">
             <div class="panel panel-info">
                 <div class="panel-heading">
@@ -30,16 +85,16 @@
                             <i class="fa  fa-comment fa-5x"></i>
                         </div>
                         <div class="col-xs-6 text-right">
-                            <p class="announcement-heading">3</p>
-                            <p class="announcement-text">用户总数</p>
+                            <p class="announcement-heading">{$info.comments}</p>
+                            <p class="announcement-text">留言笔记总数</p>
                         </div>
                     </div>
                 </div>
-                <a href="#">
+                <a href="{:U('Admin/Comments/index')}">
                     <div class="panel-footer announcement-bottom">
                         <div class="row">
                             <div class="col-xs-6">
-                                管理用户
+                                管理留言与笔记
                             </div>
                             <div class="col-xs-6 text-right">
                                 <i class="fa fa-arrow-circle-right"></i>
@@ -57,70 +112,16 @@
                             <i class="fa fa-users fa-5x"></i>
                         </div>
                         <div class="col-xs-6 text-right">
-                            <p class="announcement-heading">12</p>
-                            <p class="announcement-text">课程总数</p>
+                            <p class="announcement-heading">{$info.admin}</p>
+                            <p class="announcement-text">管理员总数</p>
                         </div>
                     </div>
                 </div>
-                <a href="#">
+                <a href="{:U('Admin/Admin/index')}">
                     <div class="panel-footer announcement-bottom">
                         <div class="row">
                             <div class="col-xs-6">
-                                管理课程
-                            </div>
-                            <div class="col-xs-6 text-right">
-                                <i class="fa fa-arrow-circle-right"></i>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="col-lg-3">
-            <div class="panel panel-danger">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <i class="fa fa-edit fa-5x"></i>
-                        </div>
-                        <div class="col-xs-6 text-right">
-                            <p class="announcement-heading">18</p>
-                            <p class="announcement-text">直播总数</p>
-                        </div>
-                    </div>
-                </div>
-                <a href="#">
-                    <div class="panel-footer announcement-bottom">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                直播管理
-                            </div>
-                            <div class="col-xs-6 text-right">
-                                <i class="fa fa-arrow-circle-right"></i>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="col-lg-3">
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <i class="fa fa-link fa-5x"></i>
-                        </div>
-                        <div class="col-xs-6 text-right">
-                            <p class="announcement-heading">6</p>
-                            <p class="announcement-text">留言</p>
-                        </div>
-                    </div>
-                </div>
-                <a href="#">
-                    <div class="panel-footer announcement-bottom">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                管理留言
+                                管理员管理
                             </div>
                             <div class="col-xs-6 text-right">
                                 <i class="fa fa-arrow-circle-right"></i>

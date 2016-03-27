@@ -97,23 +97,18 @@ class CourseController extends CommonController {
         }
         if (IS_POST) {
             $model = D("course");
-            $status = I('post.status');
-            if($status == 5) {
-                $this->ajaxReturn(array('info' => "审核未通过，请修改课程标题"));
-            } else {
-                $data = $model->create();
-                if (!$data) {
-                    $this->ajaxReturn(array('info' => $model->getError()));
-                }else{
-                    if ($model->save()) {
-                        $message = array(
-                            'info' => 'ok',
-                            'callback' => U('course/index')
-                        );
-                        $this->ajaxReturn($message);
-                    } else {
-                        $this->ajaxReturn(array('info' => "审核失败，请联系管理员"));
-                    }
+            $data = $model->create();
+            if (!$data) {
+                $this->ajaxReturn(array('info' => $model->getError()));
+            }else{
+                if ($model->save()) {
+                    $message = array(
+                        'info' => 'ok',
+                        'callback' => U('course/index')
+                    );
+                    $this->ajaxReturn($message);
+                } else {
+                    $this->ajaxReturn(array('info' => "审核失败，请联系管理员"));
                 }
             }
         }

@@ -132,7 +132,7 @@ class CommonController extends AuthController{
             $sort = $sort == 'desc' ? 1 : 0; //排序方式
 
             //catergory 增加|--
-            if (CONTROLLER_NAME === 'Category' && empty($map) ) {
+            if ((CONTROLLER_NAME === 'Course' || CONTROLLER_NAME === 'Category') && empty($map) ) {
                 $voList = "";
                 $voList = $model->where($map)->order('id ASC')->select();
                 $voList = array_slice(getSortedCategory($voList),$p->firstRow,$p->listRows);

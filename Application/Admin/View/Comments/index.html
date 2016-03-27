@@ -1,3 +1,64 @@
-<include file="Public:header"  title="留言"/>
-
-<include file="Public:footer"/>
+<include file="Public/header" title="留言笔记列表" />
+<div id="page-wrapper" class="comments">   
+    <div class="row">
+        <div class="col-md-6">
+            <a href="{:U('comments/add')}" class="btn btn-success">添加留言笔记</a>
+        </div>
+        <div class="col-md-6">
+            <form action="{:U('comments/index')}" method="comments">
+                <div class="form-group input-group">
+                    <input type="text" class="form-control" name="key" placeholder="输入课程标题搜索">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>内容</th>
+                <th>课程名称</th>
+                <th>类型</th>
+                <th>作者</th>
+                <th>留言／笔记</th>
+                <th>操作</th> 
+            </tr>
+        </thead>
+        <tbody>
+        <foreach name="model" item="v">
+            <tr>
+                <td>{$v.id}</td>
+                <td>
+                    <if condition="$v.type eq 1">{$v.comments|strtoupper|substr=0,30}
+                    <elseif condition="$v.type eq 2" />{$v.links}
+                    </if>
+                </td>
+                <td>{$v.course_title}</td>
+                <td>
+                    <if condition="$v.type eq 1"><span class="label label-info">文本</span>
+                    <elseif condition="$v.type eq 2" /><span class="label label-warning">语音</span>
+                    </if>
+                </td>
+                <td>{$v.username}</td>
+                <td>
+                    <if condition="$v.style eq 0"><span class="label label-info">留言</span>
+                    <elseif condition="$v.style eq 1" /><span class="label label-warning">笔记</span>
+                    </if>
+                </td>
+                <td>
+                <a href="{:U('comments/update',array('id' => $v['id']))}">编辑</a> | 
+             	<input type="hidden" value="{:U('comments/delete',array('id' => $v['id']))}" class="delete-url">
+	            <a href="#" style="color:red;" class="delete-item">删除</a>
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    <div class="clearfix"></div>
+    {$page}
+    
+</div>
+<include file="Public/footer" />

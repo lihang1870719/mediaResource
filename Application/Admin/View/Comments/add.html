@@ -1,0 +1,53 @@
+<include file="Public/header" title="添加留言评论" />
+<div id="page-wrapper" class="comments">
+    <form>
+        <div class="form-group">
+            <label for="comments-course">所属于课程</label>
+            <select name="comments-course" id="comments-course" class="form-control">
+                <foreach name="course" item="v">
+                    <option value="{$v.id}">{$v.html} {$v.title}</option>
+                </foreach>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="comments-content">内容</label>
+            <script id="comments-content" name="content" type="text/plain"></script>
+        </div>
+        <div class="form-group">
+            <label>留言／评论</label>
+            <label class="radio-inline">
+              <input type="radio" name="style" id="style" value="0" checked="checked">留言
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="style" id="style" value="1">笔记
+            </label>
+        </div>
+        <div class="form-group">
+            <label>类型</label>
+            <label class="radio-inline">
+              <input type="radio" name="type" id="type" value="1" checked="checked">文本
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="type" id="type" value="2">语音
+            </label>
+        </div>
+        <input type="hidden" value="{:U('comments/add')}" id="action-url">
+        <button type="submit" class="btn btn-default submit">提交</button>
+    </form>
+</div>
+<!-- 配置文件 -->
+<script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="__PUBLIC__/ueditor/ueditor.all.js"></script>
+<!-- 实例化编辑器 -->
+<script type="text/javascript">
+    var ue = UE.getEditor('comments-content',{
+        toolbars: [
+            ['fullscreen', 'source', 'undo', 'redo','bold', 'italic', 'underline','fontborder', 'strikethrough', '|','simpleupload', 'insertimage','attachment','emotion','link','unlink', '|', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote','searchreplace', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc'],
+            ['inserttable','insertrow', 'insertcol','mergeright', 'mergedown','deleterow', 'deletecol','splittorows','splittocols', 'splittocells','deletecaption','inserttitle', 'mergecells', 'deletetable','insertparagraphbeforetable', 'paragraph','fontsize','fontfamily']
+        ],
+        initialFrameHeight:500,
+        zIndex:100
+    });
+</script>
+<include file="Public/footer" />

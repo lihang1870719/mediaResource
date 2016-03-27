@@ -1,6 +1,5 @@
 <include file="Public/header" title="文章列表" />
-<div id="page-wrapper">
-    
+<div id="page-wrapper" class="post">   
     <div class="row">
         <div class="col-md-6">
             <a href="{:U('post/add')}" class="btn btn-success">添加文章</a>
@@ -25,6 +24,7 @@
                 <th>发布时间</th>
                 <th>作者</th>
                 <th>分类</th>
+                <th>状态</th>
                 <th>操作</th> 
             </tr>
         </thead>
@@ -43,7 +43,18 @@
                 <td>{$v.time|date="Y/m/d H:i:s",###}</td>
                 <td>{$v.username}</td>
                 <td>{$v.category_title}</td>
-                <td><a href="{:U('post/update',array('id' => $v['id']))}">编辑</a> | <a href="{:U('post/delete',array('id' => $v['id']))}" style="color:red;" class="delete-item">删除</a></td>
+                <td>
+                	<if condition="$v.status eq 0"><span class="label label-info">待审批</span>
+                    <elseif condition="$v.status eq 1" /><span class="label label-warning">审批通过</span>
+                    <elseif condition="$v.status eq 2" /><span class="label label-danger">审批未通过</span>
+                    </if>
+                </td>
+                <td>
+                <a href="{:U('post/approve',array('id' => $v['id']))}">审批</a> |
+                <a href="{:U('post/update',array('id' => $v['id']))}">编辑</a> | 
+             	<input type="hidden" value="{:U('post/delete',array('id' => $v['id']))}" class="delete-url">
+	            <a href="#" style="color:red;" class="delete-item">删除</a>
+                </td>
             </tr>
         </foreach>
         </tbody>

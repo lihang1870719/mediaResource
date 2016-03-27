@@ -16,7 +16,8 @@ require.config({
     	course:'app/course',
     	admin:'app/admin',
     	role:'app/role',
-    	mobile:'app/mobile'
+    	mobile:'app/mobile',
+    	comments:'app/comments'
     }
 });
 
@@ -25,7 +26,7 @@ require.config({
     	v.init();
     });
 });*/
-require(['app', 'verify', 'login', 'category', 'post','course', 'admin', 'role', 'mobile','jquery', 'bootstrap'],function(a, v, l, c, p, cs, ad, role,mobile){
+require(['app', 'verify', 'login', 'category', 'post','course', 'admin', 'role', 'mobile','comments','jquery', 'bootstrap'],function(a, v, l, c, p, cs, ad, role,mobile,comments){
 	a.init();	
 	v.init();
     l.init();
@@ -35,4 +36,5 @@ require(['app', 'verify', 'login', 'category', 'post','course', 'admin', 'role',
     ad.init();
     role.init();
     mobile.init();
+    comments.init();
 });
