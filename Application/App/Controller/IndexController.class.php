@@ -102,7 +102,12 @@ class IndexController extends BaseController {
      * 留言api
      */
     public function getComments(){
-        
+        $info = M('Comments')->select();
+        if($info) {
+            $this->returnApiSuccess('',$info);
+        } else {
+            $this->returnApiError( '什么也没查到(+_+)！');
+        }
     }
     
     /**
