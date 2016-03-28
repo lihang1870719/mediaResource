@@ -18,9 +18,10 @@ class BaseController extends Controller{
         $result = array(
             'flag' => 'Success',
             'msg' => $msg,
-            'data' =>$data
+            'data' => $data
         );
-        $this->ajaxReturn(json_encode($result), 'JSON');
+        
+        $this->ajaxReturn($result, 'JSON');
     }
     
     public function returnApiError($msg = null){
@@ -28,7 +29,7 @@ class BaseController extends Controller{
             'flag' => 'Error',
             'msg' => $msg,
         );
-        $this->ajaxReturn(json_encode($result), 'JSON');
+        $this->ajaxReturn($result, 'JSON');
     }
     
     public function returnApiErrorExample(){
