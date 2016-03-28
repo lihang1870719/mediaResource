@@ -25,7 +25,7 @@ class PostController extends CommonController
     {
         //默认显示添加表单
         if (!IS_POST) {
-            $this->assign("category",getSortedCategory(M('category')->select()));
+            $this->assign("category",getSortedCategory(M('category')->where('pid = 0')->select()));
             $this->display();
         }
         if (IS_POST) {
