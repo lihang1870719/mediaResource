@@ -49,6 +49,8 @@ class IndexController extends BaseController {
         }
     }
     
+    
+    /*************************course****************************************************************8/
     /*＊
      * 课程api  权限还没有加上去 选择可以点播的，也就是加上status=4
      */    
@@ -85,6 +87,106 @@ class IndexController extends BaseController {
         } 
     }
     
+    /*
+     * http://xxx/mediaResource/app/index/getCourseIndex
+     */
+    public function getCourseIndex(){
+        $id = I('get.id');
+        if(!$id){
+            $this->returnApiError( '请求参数有误方法(+_+)！');
+            return;
+        }
+        $course = M('Course')->where('id = %d', $id)->select();
+        $chart = M('Course')->where('pid = %d', $id)->select();
+        $temp = array();
+        foreach ($chart as $k => $v) {
+            $section = M('Course')->where('pid = %d', $v['id'])->select();
+            if($section) {
+        	       $temp1 = array(
+        	           'chart' => $v,
+        	           'section' => $section
+        	       );
+        	       array_push($temp, $temp1);
+            }
+        }
+        $info = array(
+            'course' => $course,
+            'chart_section' => $temp
+        );
+        if($info) {
+            $this->returnApiSuccess('',$info);
+        } else {
+            $this->returnApiError( '什么也没查到(+_+)！');
+        }
+    }
+    
+    /*
+     * http://xxx/mediaResource/app/index/getCourseComments
+     */
+    public function getCourseComments(){
+        $id = I('get.id');
+        if(!$id){
+            $this->returnApiError( '请求参数有误方法(+_+)！');
+            return;
+        }
+        $comments = M('Comments')->where('course_id = %d and style = 0', $id)->select();
+        $course = M('Course')->where('id = %d',$id)->select();
+        $chart = M('Course')->where('pid = %d', $id)->select();
+        $temp = array();
+        if($comments) {
+            array_push($temp, $comments);
+        }
+        foreach ($chart as $k => $v) {
+            $section = M('Course')->where('pid = %d', $v['id'])->select();
+            $temp_comments = M('Comments')->where('course_id = %d and style = 0', $v['id'])->select();
+            if($temp_comments){
+                array_push($temp, $temp_comments);
+            }
+            if($section) {
+                foreach ($section as $m => $n) {
+                    $temp_comments_section = M('Comments')->where('course_id = %d and style = 0', $n['id'])->select();
+                    if($temp_comments_section){
+                        array_push($temp, $temp_comments_section);
+                    }
+                }
+            }
+        }
+        $info = $temp;
+        if($info) {
+            $this->returnApiSuccess('',$info);
+        } else {
+            $this->returnApiError( '什么也没查到(+_+)！');
+        }
+    }
+    
+    /*
+     * http://xxx/mediaResource/app/index/getCourseDetails
+     */
+    public function getCourseDetails(){
+        $id = I('get.id');
+        if(!$id){
+            $this->returnApiError( '请求参数有误方法(+_+)！');
+            return;
+        }
+        $course = M('course')->where('id=%d', $id)->select();
+        //这里用的是admin表后期替换成user
+        //$user = M('user')->where('id=%d', $course[0]['user_id'])->select();
+        $user = M('admin')->where('id=%d', $course[0]['user_id'])->select();
+        $relate_course = M('course')->where('cate_id=%d', $course[0]['cate_id'])->limit(3)->select();
+        $info = array(
+            'course' => $course,
+            'user' => $user,
+            'relate_course' => $relate_course
+        );
+        if($info) {
+            $this->returnApiSuccess('',$info);
+        } else {
+            $this->returnApiError( '什么也没查到(+_+)！');
+        }
+    }
+    
+    
+    /************live***********************************************************************/
     /**
      * 直播api 还没加上直播中 也就是status为2才能是直播中的
      */
@@ -98,6 +200,36 @@ class IndexController extends BaseController {
         } 
     }
     
+    /**
+     * 用户的历史记录。客户端向服务器传递用户正在学习什么课程
+     * http://xxx/mediaResource/app/index/getHistory/user_id/xxx/course_id/xxx
+     * 
+     */
+    public function getHistory(){
+        $user_id = I('get.user_id');
+        $course_id = I('get.course_id');
+        if(!$user_id || !$course_id){
+            $this->returnApiError( '参数有问题(+_+)！');
+            return;
+        }
+        $data = array(
+            'user_id' => $user_id,
+            'course_history' => $course_id
+        );
+        $model = M('user_course');
+        if($model->where('user_id = %d and course_history=%d',$user_id,$course_id)->select()){
+            $this->returnApiError( '记录已经存在啦(+_+)！');
+            return;
+        }
+        if ($model->add($data)) {
+            $this->returnApiSuccess('','');
+        } else {
+            $this->returnApiError( '什么也没查到(+_+)！');
+        }
+    }
+    
+    
+    /************************post**************************************************************/
     /**
      * 获得全部文章api 文章的api也是需要加上  status = 1
      */
@@ -214,7 +346,11 @@ class IndexController extends BaseController {
     public function getPostHtml(){
         $post_id = I('get.id');
         $post = M('Post')->where('id=%d', $post_id)->select();
-        $this->assign('content', $post[0]['content']);
+        $user = M()->query('select ms_user.username as username from ms_user left join ms_post on ms_user.id = ms_post.user_id where ms_post.id = '.$post_id);
+        $cate = M()->query('select ms_category.title as cate from ms_category left join ms_post on ms_category.id = ms_post.cate_id where ms_post.id = '.$post_id);
+        $this->assign('model', $post);
+        $this->assign('user', $user[0]['username']);
+        $this->assign('cate', $cate[0]['cate']);
         $this->display();
     }
     /**
@@ -273,102 +409,5 @@ class IndexController extends BaseController {
             $this->returnApiError( '什么也没查到(+_+)！');
         }
     }
-    
-    /*
-     * http://xxx/mediaResource/app/index/getCourseIndex
-     */
-    public function getCourseIndex(){
-        $id = I('post.id');
-        if(!IS_POST){
-            $this->returnApiError( '请求方式错误，请用POST方法(+_+)！');
-            return;
-        }
-        $course = M('Course')->where('id = %d', $id)->select();
-        $chart = M('Course')->where('pid = %d', $id)->select();
-        $temp = array();
-    	foreach ($chart as $k => $v) {
-    	    $section = M('Course')->where('pid = %d', $v['id'])->select();
-    	    if($section) {
-    	       $temp1 = array(
-    	           'chart' => $v,
-    	           'section' => $section
-    	       );
-    	       array_push($temp, $temp1);
-    	    }    		
-    	}
-    	$info = array(
-    	    'course' => $course,
-    	    'chart_section' => $temp
-    	);
-        if($info) {
-            $this->returnApiSuccess('',$info);
-        } else {
-            $this->returnApiError( '什么也没查到(+_+)！');
-        }
-    }
-    
-    /*
-     * http://xxx/mediaResource/app/index/getCourseComments
-     */
-    public function getCourseComments(){
-        $id = I('post.id');
-        if(!IS_POST){
-            $this->returnApiError( '请求方式错误，请用POST方法(+_+)！');
-            return;
-        }
-        $comments = M('Comments')->where('course_id = %d and style = 0', $id)->select();
-        $course = M('Course')->where('id = %d',$id)->select();
-        $chart = M('Course')->where('pid = %d', $id)->select();
-        $temp = array();
-        if($comments) {
-            array_push($temp, $comments);
-        }
-        foreach ($chart as $k => $v) {
-            $section = M('Course')->where('pid = %d', $v['id'])->select();
-            $temp_comments = M('Comments')->where('course_id = %d and style = 0', $v['id'])->select();
-            if($temp_comments){
-                array_push($temp, $temp_comments);
-            }
-            if($section) {
-                foreach ($section as $m => $n) {
-                    $temp_comments_section = M('Comments')->where('course_id = %d and style = 0', $n['id'])->select();                       
-                    if($temp_comments_section){
-                        array_push($temp, $temp_comments_section);
-                    }
-                }
-            }
-        }
-        $info = $temp;
-        if($info) {
-            $this->returnApiSuccess('',$info);
-        } else {
-            $this->returnApiError( '什么也没查到(+_+)！');
-        }
-    }
-    
-    /*
-     * http://xxx/mediaResource/app/index/getCourseDetails
-     */
-    public function getCourseDetails(){
-        $id = I('post.id');
-        if(!IS_POST){
-            $this->returnApiError( '请求方式错误，请用POST方法(+_+)！');
-            return;
-        }
-        $course = M('course')->where('id=%d', $id)->select();
-        //这里用的是admin表后期替换成user
-        //$user = M('user')->where('id=%d', $course[0]['user_id'])->select();
-        $user = M('admin')->where('id=%d', $course[0]['user_id'])->select();
-        $relate_course = M('course')->where('cate_id=%d', $course[0]['cate_id'])->limit(3)->select();
-        $info = array(
-            'course' => $course,
-            'user' => $user,
-            'relate_course' => $relate_course
-        );
-        if($info) {
-            $this->returnApiSuccess('',$info);
-        } else {
-            $this->returnApiError( '什么也没查到(+_+)！');
-        } 
-    }
+   
 }

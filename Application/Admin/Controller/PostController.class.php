@@ -134,4 +134,18 @@ class PostController extends CommonController
         }
     }
     
+    /**
+     * 查看文章
+     */
+    public function view($id)
+    {
+        $post_id = I('get.id');
+        $post = M('Post')->where('id=%d', $post_id)->select();
+        $user = M()->query('select ms_user.username as username from ms_user left join ms_post on ms_user.id = ms_post.user_id where ms_post.id = '.$post_id);
+        $cate = M()->query('select ms_category.title as cate from ms_category left join ms_post on ms_category.id = ms_post.cate_id where ms_post.id = '.$post_id);
+        $this->assign('model', $post);
+        $this->assign('user', $user[0]['username']);
+        $this->assign('cate', $cate[0]['cate']);
+        $this->display();
+    }
 }
