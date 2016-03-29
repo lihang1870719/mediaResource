@@ -1,10 +1,26 @@
-<include file="Public/header" title="短信接口列表" />
+<include file="Public/header" title="短信接口管理" />
 <div id="page-wrapper" class="message"> 
+    <div class="row">
+        <div class="col-md-6">
+            <a href="{:U('message/add')}" class="btn btn-success">添加短信接口</a>
+        </div>
+        <div class="col-md-6">
+            <form action="{:U('message/index')}" method="get">
+                <div class="form-group input-group">
+                    <input type="text" class="form-control" name="key" placeholder="输入短信接口搜索">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
     <table class="table table-hover table-striped">
         <thead>
             <tr>
                 <th>编号</th>
-                <th>接口名称</th>
+                <th>短信接口名称</th>
+                <th>帐号</th>
                 <th>状态</th>
                 <th>操作</th>
             </tr>
@@ -13,10 +29,11 @@
         <foreach name="model" item="v">
             <tr>
                 <td>{$v.id}</td>
-                <td>{$v.servername}</td>
+                <td>{$v.mail_server}</td>
+                <td>{$v.username}</td>
                 <td>
-                    <if condition="$v.type eq 1"><span class="label label-info">有效</span>
-                    <elseif condition="$v.type eq 0" /><span class="label label-warning">无效</span>
+                    <if condition="$v.is_effect eq 1"><span class="label label-info">有效</span>
+                    <elseif condition="$v.is_effect eq 0" /><span class="label label-warning">无效</span>
                     </if>
                 </td>
                 <td>

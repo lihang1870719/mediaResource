@@ -1,0 +1,30 @@
+<include file="Public/header" title="短信接口服务器" />
+<div id="page-wrapper" class="message">
+    <form>
+        <div class="form-group">
+            <label for="message-title">短信接口名称</label>
+            <input type="text" name="title" class="form-control" value="{$message.mail_server}" id="message-title" placeholder="短信接口名称">
+        </div>
+        <div class="form-group">
+            <label for="message-username">帐号</label>
+            <input type="text" name="title" class="form-control" value="{$message.username}" id="message-username" placeholder="帐号">
+        </div>
+         <div class="form-group">
+            <label for="message-password">密码</label>
+            <input type="password" name="title" class="form-control" value="{$message.password}" id="message-password" placeholder="密码">
+        </div>
+        <div class="form-group">
+            <label>状态</label>
+            <label class="radio-inline">
+              <input type="radio" name="is_effect"  value="0" <if condition="$message.is_effect eq 0">checked="checked"</if> >无效
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="is_effect" value="1" <if condition="$message.is_effect eq 1">checked="checked"</if> >有效
+            </label>
+        </div>
+        <input type="hidden" id ="id" value ="{$message.id}">
+        <input type="hidden" id="action-url" name="action" value="{:U('message/update')}">
+        <button type="submit" class="btn btn-default submit">提交</button>
+    </form>
+</div>
+<include file="Public/footer" />
