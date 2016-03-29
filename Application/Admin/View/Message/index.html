@@ -1,0 +1,33 @@
+<include file="Public/header" title="短信接口列表" />
+<div id="page-wrapper" class="message"> 
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>接口名称</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        <foreach name="model" item="v">
+            <tr>
+                <td>{$v.id}</td>
+                <td>{$v.servername}</td>
+                <td>
+                    <if condition="$v.type eq 1"><span class="label label-info">有效</span>
+                    <elseif condition="$v.type eq 0" /><span class="label label-warning">无效</span>
+                    </if>
+                </td>
+                <td>
+	                <a href="{:U('message/update',array('id' => $v['id']))}">编辑</a> | 
+	                <input type="hidden" value="{:U('message/delete',array('id' => $v['id']))}" class="delete-url">
+	                <a href="#" style="color:red;" class="delete-item">删除</a>
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    {$page}
+</div>
+<include file="Public/footer" />

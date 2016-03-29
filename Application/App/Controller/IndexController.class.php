@@ -107,6 +107,12 @@ class IndexController extends BaseController {
         	           'section' => $section
         	       );
         	       array_push($temp, $temp1);
+            }else {
+                $temp1 = array(
+                    'chart' => $v,
+                    'section' => '',
+                );
+                array_push($temp, $temp1);
             }
         }
         $info = array(

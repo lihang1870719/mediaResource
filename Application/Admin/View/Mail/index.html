@@ -1,0 +1,50 @@
+<include file="Public/header" title="邮件管理" />
+<div id="page-wrapper" class="mail"> 
+    <div class="row">
+        <div class="col-md-6">
+            <a href="{:U('mail/add')}" class="btn btn-success">添加邮箱服务器</a>
+        </div>
+        <div class="col-md-6">
+            <form action="{:U('mail/index')}" method="get">
+                <div class="form-group input-group">
+                    <input type="text" class="form-control" name="key" placeholder="输入邮箱服务器名搜索">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>服务器地址</th>
+                <th>帐号</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        <foreach name="model" item="v">
+            <tr>
+                <td>{$v.id}</td>
+                <td>{$v.mail_server}</td>
+                <td>{$v.username}</td>
+                <td>
+                    <if condition="$v.is_effect eq 1"><span class="label label-info">有效</span>
+                    <elseif condition="$v.is_effect eq 0" /><span class="label label-warning">无效</span>
+                    </if>
+                </td>
+                <td>
+	                <a href="{:U('message/update',array('id' => $v['id']))}">编辑</a> | 
+	                <input type="hidden" value="{:U('message/delete',array('id' => $v['id']))}" class="delete-url">
+	                <a href="#" style="color:red;" class="delete-item">删除</a>
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+    {$page}
+</div>
+<include file="Public/footer" />
