@@ -20,12 +20,6 @@ require.config({
     	comments:'app/comments'
     }
 });
-
-/*require(['domReady','verify'],function(dm,v){
-    dm(function(){
-    	v.init();
-    });
-});*/
 require(['app', 'verify', 'login', 'category', 'post','course', 'admin', 'role', 'mobile','comments','jquery', 'bootstrap'],function(a, v, l, c, p, cs, ad, role,mobile,comments){
 	a.init();	
 	v.init();
