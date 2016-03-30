@@ -395,6 +395,7 @@ class IndexController extends BaseController {
      */
     public function searchCourse(){
         $map['title'] = array('like','%'.trim($_REQUEST['key']).'%');
+        $map['pid'] = array('eq', 0);
         $info = M('Course')->where($map)->select();
         if($info) {
             $this->returnApiSuccess('',$info);
