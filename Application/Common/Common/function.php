@@ -67,3 +67,21 @@ function getSettingValueFieldByKey($key,$field)
 {
 	return M('setting')->getFieldByKey($key,$field);
 }
+
+function get_gmtime()
+{
+    return (time() - date('Z'));
+}
+
+//后台日志记录
+function save_log($msg,$status)
+{
+    $log_data['log_info'] = $msg;
+    $log_data['log_time'] = get_gmtime();
+    $log_data['log_admin'] = session('admin_id');
+    $log_data['log_ip']	= get_client_ip();
+    $log_data['log_status'] = $status;
+    $log_data['module']	=	MODULE_NAME;
+    $log_data['action'] = 	ACTION_NAME;
+    M("Log")->add($log_data);
+}

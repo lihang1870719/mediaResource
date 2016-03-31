@@ -46,8 +46,10 @@ class AdminController extends CommonController {
                         'info' => 'ok',
                         'callback' => U('admin/index')
                     );
+                    save_log("管理员添加成功",1);
                     $this->ajaxReturn($message);
                 } else {
+                    save_log("管理员添加失败",0);
                     $this->ajaxReturn(array('info' => "管理员添加失败"));
                 }
             }
@@ -60,6 +62,7 @@ class AdminController extends CommonController {
      */
     public function update()
     {
+        
         //默认显示添加表单
         if (!IS_POST) {
             $group = M('role')->where('is_effect = 1')->select();
@@ -76,13 +79,16 @@ class AdminController extends CommonController {
             }else{
                 //   dd(I());die;
                 $data['password'] = md5($data['password']);
+                //$log_info = M(MODULE_NAME)->where("id=".intval($data['id']))->getField("username");
                 if ($model->save($data)) {
                     $message = array(
                         'info' => 'ok',
                         'callback' => U('admin/index')
                     );
+                    save_log("管理员更新成功",1);
                     $this->ajaxReturn($message);
                 } else {
+                    save_log("管理员更新失败",0);
                     $this->ajaxReturn(array('info' => "管理员更新失败"));
                 }
             }
@@ -102,8 +108,10 @@ class AdminController extends CommonController {
                 'info' => 'ok',
                 'callback' => U('admin/index')
             );
+            save_log("管理员删除成功",1);
             $this->ajaxReturn($message);
         }else{
+            save_log("管理员删除失败",0);
             $this->ajaxReturn(array('info' => "管理员删除失败"));
         }
     }

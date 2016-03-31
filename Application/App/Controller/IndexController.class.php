@@ -371,6 +371,43 @@ class IndexController extends BaseController {
         }
     }
     
+    /*****************************笔记******************************************/
+    /**
+     * http://xxx/mediaResource/App/Index/getnote
+     * post: type=1 user_id=1 course_id=1 note = xxx
+     * 获得 客户端给服务端指定用户在指定课程做的笔记
+     * type为1者是文字；type 为2者为语音
+     * note 为 笔记内容
+     */
+    public function getnote(){
+        $type = I('post.type');
+        $courseId = I('post.course_id');
+        $userId = I('post.user_id');
+        $comments = I('post.note');
+        $result = M('course')->where('id=%d and user_id=%d', $courseId, $userId)->find();
+        if(!$result) {
+            $this->returnApiError( 'userId courseId 错误(+_+)！');
+        }
+        if($type == 1) {
+            /* 文字 */
+            $data = array(
+                'comments' => $comments,
+                'course_id' => $courseId,
+                'user_id' => $userId,
+                'type' => $type,
+                'style' => 1
+            );
+            if(M('comments')->add($data)){
+                $info = "笔记插入成功";
+                $this->returnApiSuccess('',$info);
+            }else{
+                $this->returnApiError( '什么也没查到(+_+)！');
+            }
+        } else if ($type == 2) {
+            /* 语音 */
+        }
+    }
+    
     /**
      * 留言api
      */

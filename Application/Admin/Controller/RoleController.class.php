@@ -79,8 +79,10 @@ class RoleController extends CommonController
                     'info' => 'ok',
                     'callback' => U('role/index')
                 );
+                save_log("更新管理员组成功",1);
                 $this->ajaxReturn($message);
             } else {
+                save_log("更新管理员组失败",0);
                 $this->ajaxReturn(array('info' => "更新管理员组失败"));
             }          
         }
@@ -100,8 +102,10 @@ class RoleController extends CommonController
                 'info' => 'ok',
                 'callback' => U('role/index')
             );
+            save_log("删除管理组成功",1);
             $this->ajaxReturn($message);
         }else{
+            save_log("删除管理组失败",0);
             $this->ajaxReturn(array('info' => "删除失败"));
         }
     }
@@ -141,8 +145,10 @@ class RoleController extends CommonController
                         'info' => 'ok',
                         'callback' => U('role/index')
                     );
+                    save_log("新增管理组成功",1);
                     $this->ajaxReturn($message);
                 } else {
+                    save_log("新增管理组失败",0);
                     $this->ajaxReturn(array('info' => "新增管理组失败"));
                 }
             }

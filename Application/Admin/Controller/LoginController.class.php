@@ -52,7 +52,7 @@ class LoginController extends Controller {
                 'callback' => U('Index/index')
             );
         }
-        
+        save_log("Admin成功登录",1);
         $this->ajaxReturn($message);
     }
     
@@ -73,6 +73,7 @@ class LoginController extends Controller {
     public function logout(){
         session('admin_id',null);
         session('admin_name',null);
+        save_log("Admin成功登出",1);
         redirect(U('Login/index'));
     }
 }
