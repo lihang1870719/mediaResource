@@ -49,6 +49,23 @@ class IndexController extends BaseController {
         }
     }
     
+    /**
+     * 指定分类下的课程列表
+     * 
+     * getCategoryCourse/id/2
+     */
+    public function getCategoryCourse(){
+        //检查是否通过post方法得到数据
+        $id = I('get.id');
+        //$field[] = 'id,pid,name,title,keywords,description';
+        $info = M('Course')->where("cate_id = $id")->select();
+        if($info) {
+            $this->returnApiSuccess('',$info);
+        } else {
+            $this->returnApiError( '什么也没查到(+_+)！');
+        }
+    }
+    
     
     /*************************course****************************************************************8/
     /*＊
@@ -62,7 +79,7 @@ class IndexController extends BaseController {
         }
         $count = M('Course')->where('pid = 0')->count();
         $list_row = 10;
-        $page  = round($count/$list_row);
+        $page  = ceil($count/$list_row);
         $mod = $count%$list_row;
         $temp = array();
         if($r_page > $page) {
@@ -127,7 +144,7 @@ class IndexController extends BaseController {
     }
     
     /*
-     * http://xxx/mediaResource/app/index/getCourseComments
+     * http://xxx/mediaResource/app/index/getCourseComments/id/xxx
      */
     public function getCourseComments(){
         $id = I('get.id');
@@ -135,7 +152,12 @@ class IndexController extends BaseController {
             $this->returnApiError( '请求参数有误方法(+_+)！');
             return;
         }
-        $comments = M('Comments')->where('course_id = %d and style = 0', $id)->select();
+        $sql = "select ms_comments.id,ms_comments.comments,
+            ms_comments.course_id,ms_comments.user_id,
+            ms_user.username as username from ms_comments left join ms_user 
+            on ms_comments.user_id = ms_user.id 
+            where ms_comments.style = 0 and ms_comments.course_id = ";
+        $comments= M()->query($sql.$id);
         $course = M('Course')->where('id = %d',$id)->select();
         $chart = M('Course')->where('pid = %d', $id)->select();
         $temp = array();
@@ -144,13 +166,13 @@ class IndexController extends BaseController {
         }
         foreach ($chart as $k => $v) {
             $section = M('Course')->where('pid = %d', $v['id'])->select();
-            $temp_comments = M('Comments')->where('course_id = %d and style = 0', $v['id'])->select();
+            $temp_comments = M()->query($sql.$v['id']);
             if($temp_comments){
                 array_push($temp, $temp_comments);
             }
             if($section) {
                 foreach ($section as $m => $n) {
-                    $temp_comments_section = M('Comments')->where('course_id = %d and style = 0', $n['id'])->select();
+                    $temp_comments_section = M()->query($sql.$n['id']);
                     if($temp_comments_section){
                         array_push($temp, $temp_comments_section);
                     }
@@ -165,6 +187,38 @@ class IndexController extends BaseController {
         }
     }
     
+    
+    /**
+     * 获取客户端提交的评论 post请求
+     *  http://xxx/mediaResource/app/index/getComments
+     *  course_id:xx
+     *  user_id:xxx
+     *  comments:xxx
+     */
+    public function getComments(){
+        $courseId = I('post.course_id');
+        $userId = I('post.user_id');
+        $comments = I('post.comments');
+        $result = M('course')->where('id=%d and user_id=%d', $courseId, $userId)->find();
+        if(!$result) {
+            $this->returnApiError( 'userId courseId 错误(+_+)！');
+            return;
+        }
+        $data = array(
+            'comments' => $comments,
+            'course_id' => $courseId,
+            'user_id' => $userId,
+            'type' => 1,
+            'style' => 1
+        );
+        if(M('comments')->add($data)){
+            $info = "留言插入成功";
+            $this->returnApiSuccess('',$info);
+        }else{
+            $this->returnApiError( '什么也没查到(+_+)！');
+        }
+       
+    }
     /*
      * http://xxx/mediaResource/app/index/getCourseDetails
      */
@@ -247,7 +301,7 @@ class IndexController extends BaseController {
         }
         $count = M('Post')->count();
         $list_row = 10;
-        $page  = round($count/$list_row);
+        $page  = ceil($count/$list_row);
         $mod = $count%$list_row;
         $temp = array();
         $sql = 'select ms_post.id,ms_post.title,ms_post.content,ms_post.crt,ms_category.title as cate_title from ms_post left join ms_category on ms_post.cate_id = ms_category.id ';
@@ -291,10 +345,11 @@ class IndexController extends BaseController {
         }
         $count = M('Post')->where('cate_id = %d', $cate_id)->count();
         $list_row = 10;
-        $page  = round($count/$list_row);
+        $page  = ceil($count/$list_row);
+        new \Extend\Slog('./logs0401.text',$page."===".$r_page,__FILE__);
         $mod = $count%$list_row;
         $temp = array();
-        $sql = 'select ms_post.id,ms_post.title,ms_post.content,ms_post.crt,ms_category.title as cate_title from ms_post left join ms_category on ms_post.cate_id = ms_category.id ';
+        $sql = "select ms_post.id,ms_post.title,ms_post.content,ms_post.crt,ms_category.title as cate_title from ms_post left join ms_category on ms_post.cate_id = ms_category.id where ms_post.cate_id = $cate_id ";
         if($r_page > $page) {
             $this->returnApiError( 'page参数超过了最大值(+_+)！');
         } else if ($r_page == $page) {
@@ -387,6 +442,7 @@ class IndexController extends BaseController {
         $result = M('course')->where('id=%d and user_id=%d', $courseId, $userId)->find();
         if(!$result) {
             $this->returnApiError( 'userId courseId 错误(+_+)！');
+            return;
         }
         if($type == 1) {
             /* 文字 */
@@ -404,20 +460,33 @@ class IndexController extends BaseController {
                 $this->returnApiError( '什么也没查到(+_+)！');
             }
         } else if ($type == 2) {
-            /* 语音 */
+            $data = array(
+                'comments' => $comments,
+                'course_id' => $courseId,
+                'user_id' => $userId,
+                'type' => $type,
+                'style' => 2
+            );
+            if(M('comments')->add($data)){
+                $info = "笔记插入成功";
+                $this->returnApiSuccess('',$info);
+            }else{
+                $this->returnApiError( '什么也没查到(+_+)！');
+            }
         }
     }
     
-    /**
-     * 留言api
-     */
-    public function getComments(){
-        $info = M('Comments')->select();
-        if($info) {
+     public function uploader(){
+        $base_path = "./uploads/"; //接收文件目录  
+        $target_path = $base_path . basename ( $_FILES ['uploadedfile'] ['name'] );  
+        if (move_uploaded_file ( $_FILES ['uploadedfile'] ['tmp_name'], $target_path )) {  
+            $info = array ("message" => "uploads/".$_FILES ['uploadedfile'] ['name'] );  
+            //echo json_encode ( $array );
             $this->returnApiSuccess('',$info);
-        } else {
-            $this->returnApiError( '什么也没查到(+_+)！');
-        }
+        } else {  
+            $array = array ("code" => "0", "message" => "There was an error uploading the file, please try again!" . $_FILES ['uploadfile'] ['error'] );  
+            $this->returnApiError( '上传文件出错(+_+)！');
+        }   
     }
     
     /**
