@@ -10,7 +10,7 @@ class CourseModel extends Model{
     );
     // 定义自动完成
     protected $_auto    =   array(
-
+        array('pid',0),
     );
 }
 ?>

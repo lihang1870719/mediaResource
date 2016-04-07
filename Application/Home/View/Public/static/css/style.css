@@ -247,7 +247,6 @@ hr { display: none; }
 
 .post .meta {
 	height: 32px;
-	margin-top: -10px;
 	margin-left: 2px;
 	padding: 4px 30px 6px 20px;
 	background: url(../img/img04.jpg) no-repeat left bottom;
@@ -312,7 +311,6 @@ hr { display: none; }
 }
 
 #sidebar ul {
-	margin: 0;
 	padding: 0;
 	list-style: none;
 	line-height: normal;
@@ -326,7 +324,6 @@ hr { display: none; }
 }
 
 #sidebar li ul {
-	margin: 0px 0px;
 	border: none;
 }
 
@@ -355,8 +352,7 @@ hr { display: none; }
 
 #sidebar h2 {
 	height: 32px;
-	margin: 0 0 10px 0px;
-	padding: 8px 0 10px 20px;
+	padding: 8px 0 15px 20px;
 	background: url(../img/img03.jpg) no-repeat left bottom;
 	text-transform: lowercase;
 	font-size: 24px;

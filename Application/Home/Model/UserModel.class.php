@@ -12,6 +12,7 @@ class UserModel extends Model{
     protected $_auto    =   array(
         array('create_time','time',1,'function'),
         array('update_time','time',1,'function'),
+        array('password','md5',3,'function'),
         array('status',0),
     );
 }

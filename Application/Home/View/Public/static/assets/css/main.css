@@ -1,5 +1,9 @@
 /* Header */
 #head { background:#181015 url( ../images/bg_header.jpg) no-repeat; background-size: cover; min-height:520px; text-align: center; padding-top:240px; color:white; font-family:"Open sans", Helvetica, Arial; font-weight:300; }
+#head2 {  min-height:300px; padding-top:120px; color:black; font-family:"Open sans", Helvetica, Arial; font-weight:300; }
+#head2 ul li{float: left;margin-left: 20px; list-style: none;font-size: 20px;}
+#head2 a{color: black;text-decoration: none;}
+#head2 a:hover{color: red;}
 #head.secondary { height:100px; min-height: 100px; padding-top:0px; }
 	#head .lead { font-family:"Open sans", Helvetica, Arial; font-size:44px; margin-bottom:6px; color:white; line-height:1.15em; } 
 	#head .tagline { color:rgba(255,255,255,0.75); margin-bottom:25px; }
@@ -80,3 +84,11 @@ img.pull-left { margin-right: 10px; }
 
 	.widget-simplenav { margin-left:-5px; }		
 	.widget-simplenav a{ margin:0 5px; }		
+
+.title a{
+	color: black;
+	text-decoration:none;
+}
+.title a:hover{
+	color: red;
+}

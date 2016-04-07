@@ -209,7 +209,7 @@ class IndexController extends BaseController {
             'course_id' => $courseId,
             'user_id' => $userId,
             'type' => 1,
-            'style' => 1
+            'style' => 0
         );
         if(M('comments')->add($data)){
             $info = "留言插入成功";

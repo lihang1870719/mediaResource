@@ -13,8 +13,8 @@
 	<div class="login">
 		<h1>登录</h1>
 		<form id='loginForm'>
-			<div class='ub'><div class="umw100 upad5">手机号:</div><input type="text" name="username" id="username" placeholder="请输入手机号"
-			required="required" /></div><div class='ub'><div class="umw100 upad5">密码：</div> <input type="password" name="password"
+			<div class='ub'><div class="umw100 upad5">用户名:</div><input type="text" name="username" id="username" placeholder="请输入手机号或邮箱"
+			required="required"  value="15827523210"/></div><div class='ub'><div class="umw100 upad5">密码：</div> <input type="password" name="password"
 			placeholder="请输入密码" id="password" required="required" /></div>
 			<div class='ub'>
 				<div class='tc-w ub-f1'>
@@ -27,23 +27,20 @@
 				</div>
 			</div>
 			<div class='hint umar-t20'></div>
-			<div class="ub ub-ac ub-pc"><div class="button button-raised button-primary button-pill button-large w350" id="loginBtn">登录</div></div>
+			<div class="ub ub-ac ub-pc umar-t20"><div class="button button-raised button-primary button-pill button-large w350" id="loginBtn">登录</div></div>
 		</form>
 	</div>
 </body>
+<script type="text/javascript" src="__STATIC__/js/main.js"></script>
 <script type="text/javascript">
 	$(function() {
-		//手机号正则表达式
-		var reg = /^1[3|4|5|8][0-9]\d{4,8}$/;
+		var $username = $("#username");
+		$username.on('input', clean);
 		$("#loginBtn").click(function() {
-			var username = $("#username").val();
+			var username = $username.val();
 			var password = $("#password").val();
 			if (username == '') {
-				alert("请输入手机号!");
-				return;
-			}
-			if (username != '' && !reg.test(username)) {
-				alert("请输入有效手机号!");
+				alert("请输入用户名!");
 				return;
 			}
 			if (password == '') {
@@ -54,12 +51,10 @@
 				username : username,
 				password : password
 			}, function(data) {
-				console.log(data);
+				//console.log(data);
 				var status = data.status;
 				var content = data.content;
 				if (status == 0) {
-					//登陆成功
-					//$(".hint").text(content);
 					window.location.href="__MODULE__/Index/indexLoginPage"
 					return;
 				} else {
@@ -71,9 +66,6 @@
 		function clean() {
 			$(".hint").text('');
 		}
-
-		var $username = $("#username");
-		$username.on('input', clean);
 	})
 </script>
 </html>

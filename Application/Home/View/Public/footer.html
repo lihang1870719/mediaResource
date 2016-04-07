@@ -4,3 +4,9 @@
 	<!-- end #footer -->
 </body>
 <script type="text/javascript" src="__STATIC__/js/jquery-2.2.2.min.js"></script>
+<script>
+		$(document).ready(function(){
+			var nickname="<?php echo $_SESSION["nickname"]; ?>";
+			$("#nickname").text(nickname);
+		})
+</script>

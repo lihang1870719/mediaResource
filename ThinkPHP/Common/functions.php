@@ -1548,3 +1548,33 @@ function think_filter(&$value){
 function in_array_case($value,$array){
     return in_array(strtolower($value),array_map('strtolower',$array));
 }
+//发送邮件
+function sendMail($to, $subject, $content) {
+    Vendor('PHPMailer.PHPMailerAutoload');
+    $mail = new PHPMailer();
+    // 装配邮件服务器
+    if (C('MAIL_SMTP')) {
+        $mail->IsSMTP();
+    }
+    $mail->Host = C('MAIL_HOST');
+    $mail->SMTPAuth = C('MAIL_SMTPAUTH');
+    $mail->Username = C('MAIL_USERNAME');
+    $mail->Password = C('MAIL_PASSWORD');
+    $mail->SMTPSecure = C('MAIL_SECURE');
+    $mail->CharSet = C('MAIL_CHARSET');
+    // 装配邮件头信息
+    $mail->From = C('MAIL_USERNAME');
+    $mail->FromName =C('MAIL_FromName');
+    $mail->IsHTML(C('MAIL_ISHTML'));
+    $mail->AddAddress($to);
+    // 装配邮件正文信息
+    $mail->Subject = $subject;
+    $mail->Body = $content;
+    //return $mail;
+    // 发送邮件
+    if (!$mail->Send()) {
+        return FALSE;
+    } else {
+        return TRUE;
+    }
+}

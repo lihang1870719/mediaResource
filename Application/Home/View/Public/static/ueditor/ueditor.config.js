@@ -247,7 +247,7 @@
 
         //elementPathEnabled
         //是否启用元素路径，默认是显示
-        ,elementPathEnabled : false
+        //,elementPathEnabled : true
 
         //wordCount
         //,wordCount:true          //是否开启字数统计

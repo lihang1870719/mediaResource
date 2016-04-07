@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>新增文章</title>
+<title>个人中心</title>
 <link rel="stylesheet" href="__STATIC__/css/style.css">
 <link rel="stylesheet" href="__STATIC__/css/common.css">
 <link rel="stylesheet" href="__STATIC__/css/buttons.css">
@@ -11,21 +11,38 @@
 </head>
 <body>
 	<div id="logo">
-		<h1>新增文章</h1>
-	</div>
+		<h1>个人中心</h1>
+					<ul class="nav navbar-nav pull-right">
+				<div id="personal"><div class="ub">欢迎回来,<div id="nickname"></div></div>
+				<div class="ub umar-t10">
+					<div class="ub"><a href="__MODULE__/Index/indexLoginpage" class="button button-highlight button-big" >回到主页</a></div>
+					<div class="ub umar-l"><a href="__MODULE__/Index/exitLogin" class="button button-caution button-big" >退出</a></div></div>
+				</div>
+			</ul></div>
 	<hr />
 	<div id="header">
 		<div id="menu">
 			<ul>
-				<li><a href="__MODULE__/Index/indexLoginPage" class="first">主页</a></li>
 				<li><a href="__MODULE__/Course/show">课程</a></li>
 				<li><a href="__MODULE__/Article/show">文章</a></li>
+				<li><a href="#">个人资料</a></li>
 			</ul>
 		</div>
+		<!-- end #menu -->
+		<div id="search">
+			<form method="get" action="">
+				<fieldset>
+					<input type="text" name="s" id="search-text" size="15" /> <input
+						type="submit" id="search-submit" value="GO" />
+				</fieldset>
+			</form>
+		</div>
+		<!-- end #search -->
 	</div>
 	<!-- end #header -->
+	<!-- end #header -->
 	<!--新增一篇文章-->
-	<div id="main" class="umar-t20 h800 article">
+	<div id="main" class="article ub ub-ac ub-pc umar-b20">
 		<div class="umar-t30">
 			<h4>新增文章</h4>
 			<div>
@@ -56,7 +73,8 @@
 						<script id="editor" type="text/plain"
 							style="width: 800px; height: 300px;"></script>
 					</div>
-				</div>				
+				</div>			
+				<div class='hint umar-t20'></div>	
 						<div class="umar-t20">
 					<a
 						class="button button-glow button-rounded button-raised button-primary"
@@ -66,20 +84,9 @@
 		</div>
 	</div>
 	<!-- end #header-wrapper -->
-	<div id="page">
-		<div id="sidebar"></div>
-		<!-- end #sidebar -->
-		<div style="clear: both;">&nbsp;</div>
-	</div>
 	<!-- end #page -->
-	<div id="footer">
-		<p>
-			Copyright (c) 2008 Sitename.com. All rights reserved. Design by <a
-				href="http://www.freecsstemplates.org/">Free CSS Templates</a>.
-		</p>
-	</div>
+<include file="Public/footer" title="展示文章内容" />
 	<!-- end #footer -->
-</body>
 <script type="text/javascript"
 	src="__STATIC__/ueditor/ueditor.config.js"></script>
 <script type="text/javascript"
@@ -90,7 +97,6 @@
 	src="__STATIC__/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript" src="__STATIC__/js/jquery-2.2.2.min.js"></script>
 <script type="text/javascript">
-	//var $user_id="<?php echo $_SESSION["user_id"]; ?>";
 	//实例化编辑器
 	//建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
 	var ue = UE.getEditor('editor');
@@ -99,17 +105,31 @@
 	$("#btn1").click(function() {
 		//申请人id
 		var user_id = "<?php echo $_SESSION["user_id"]; ?>";
+		var nickname="<?php echo $_SESSION["nickname"]; ?>";
 		console.log(user_id);
 		//获取文章标题
 		var title = $("#title").val();
 		//获取分类id
 		var cate_id = $("#cate_id").val();
 		//文章内容
-		var content = UE.getEditor('editor').getContentTxt();
+		var content = UE.getEditor('editor').getContent();
+		var contentTxt = UE.getEditor('editor').getContentTxt();
+		var intro=contentTxt.substring(0,50);
+		if(!title){
+			alert("请输入标题");
+			return;
+		}
+		if(!content){
+			alert("请输入文章内容");
+			return;
+		}
 		$.post("{:U('Article/add')}", {
 			title : title,
 			content : content,
+			intro:intro,
 			cate_id : cate_id,
+			user_id:user_id,
+			nickname:nickname
 		}, function(data) {
 			console.log(data);
 			var status = data.status;

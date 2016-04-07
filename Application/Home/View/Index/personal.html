@@ -2,6 +2,33 @@
 <!-- end #header-wrapper -->
 <div id="page">
 	<div id="content">
+			<volist id="co" name="coursedata">
+		<div class="post umar-t20">
+			<h2 class="title">
+				<a href="#">{$co['title']}</a>
+			</h2>
+			<p class="meta">
+				Sunday, April 26, 2009 7:27 AM Posted by <a href="#">Someone</a>
+			</p>
+			<div class="entry">
+				<p>
+					This is <strong>Conjunction </strong>, a free, fully
+					standards-compliant CSS template designed by <a
+						href="http://www.freecsstemplates.org/">Free CSS Templates</a>,
+					released for free under the <a
+						href="http://creativecommons.org/licenses/by/2.5/">Creative
+						Commons Attribution 2.5</a> license. You're free to use this template
+					for anything as long as you link back to <a
+						href="http://www.freecsstemplates.org/">my site</a>. Enjoy :)
+				</p>
+				<p>Sed lacus. Donec lectus. Nullam pretium nibh ut turpis. Nam
+					bibendum. In nulla tortor, elementum ipsum. Proin imperdiet est.
+					Phasellus dapibus semper urna. Pellentesque ornare, orci in felis.
+				</p>
+			</div>
+		</div>
+		</volist>
+		
 		<div class="post">
 			<h2 class="title"><a href="#">Welcome to Conjunction </a></h2>
 			<p class="meta">Sunday, April 26, 2009 7:27 AM Posted by <a href="#">Someone</a></p>
@@ -25,42 +52,7 @@
 			</div>
 		</div>
 	</div><!-- end #content -->
-	<div id="sidebar">
-		<ul>
-			<li>
-				<h2>Aliquam tempus</h2>
-				<p>Mauris vitae nisl nec metus placerat perdiet est. Phasellus dapibus semper urna. Pellentesque ornare, orci in consectetuer hendrerit, volutpat.</p>
-			</li>
-			<li>
-				<h2>Pellenteque ornare </h2>
-				<ul>
-					<li><a href="#">Nec metus sed donec</a></li>
-					<li><a href="#">Magna lacus bibendum mauris</a></li>
-					<li><a href="#">Velit semper nisi molestie</a></li>
-					<li><a href="#">Eget tempor eget nonummy</a></li>
-					<li><a href="#">Nec metus sed donec</a></li>
-					<li><a href="#">Velit semper nisi molestie</a></li>
-					<li><a href="#">Eget tempor eget nonummy</a></li>
-					<li><a href="#">Nec metus sed donec</a></li>
-				</ul>
-			</li>
-			<li>
-				<h2>Turpis nulla</h2>
-				<ul>
-					<li><a href="#">Nec metus sed donec</a></li>
-					<li><a href="#">Magna lacus bibendum mauris</a></li>
-					<li><a href="#">Velit semper nisi molestie</a></li>
-					<li><a href="#">Eget tempor eget nonummy</a></li>
-					<li><a href="#">Nec metus sed donec</a></li>
-					<li><a href="#">Nec metus sed donec</a></li>
-					<li><a href="#">Magna lacus bibendum mauris</a></li>
-					<li><a href="#">Velit semper nisi molestie</a></li>
-					<li><a href="#">Eget tempor eget nonummy</a></li>
-					<li><a href="#">Nec metus sed donec</a></li>
-				</ul>
-			</li>
-		</ul>
-	</div>
+<include file="Public/sidebar" />
 	<!-- end #sidebar -->
 	<div style="clear: both;">&nbsp;</div>
 </div>

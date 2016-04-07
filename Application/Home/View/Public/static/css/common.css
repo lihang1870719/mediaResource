@@ -74,14 +74,23 @@
 .umar-t10{
 	margin-top:10px;
 }
+.umar-b10{
+	margin-bottom:10px;
+}
 .umar-t20{
 	margin-top:20px;
+}
+.umar-b20{
+	margin-bottom:20px;
 }
 .umar-t30{
 	margin-top:30px;
 }
 .umar-t40{
 	margin-top:40px;
+}
+.umar-t80{
+	margin-top:60px;
 }
 .umar-l50{
 	margin-left:50px;
@@ -119,7 +128,6 @@ a{
 .article{
 	background-color:white;
 	color:black;
-	padding:0 200px 0 200px;
 }
 .w100{
 	width:100px;
@@ -132,7 +140,7 @@ a{
 }
 #getcode{
 	width:100px;
-		padding-top: 4px;
+	padding-top: 4px;
 	font-size: 10px;
 }
 .ulev-13{
@@ -149,4 +157,35 @@ a{
 }
 .umar-l{
 	margin-left: 10px;
+}
+.bgc-ff{
+	background-color: #FFFFFF;
+}
+
+#page ul li{
+	list-style:none;
+	float:left;
+}
+
+#page .num ,.prev ,.next{
+	font-size: 20px;
+	color: green;
+	margin: 0 10px;
+}
+#page .current{
+	font-size: 20px;
+	color: red;
+	margin: 0 10px;
+}
+.ulev-30{
+	font-size: 30px;
+}
+.ulev-15{
+	font-size: 15px;
+}
+.courselist{
+	padding: 10px 10px 30px 20px;
+}
+.upad-b30{
+	padding-bottom: 30px;
 }
