@@ -70,7 +70,6 @@ class UserController extends Controller
         
         //方式3：QQ  weibo  github第三方登陆
         //验证允许实用的登陆方式，可在后台用代码实现
-        
         $can_use = in_array(strtolower($type), array('qq','sina','github'));
         if(!$can_use){
             $this->error("不允许使用此方式登陆");
@@ -82,7 +81,98 @@ class UserController extends Controller
         }
         
     }
+       
+    //QQ weibo  github登录回调地址
+    public function callback($type = null, $code = null)
+    {
     
+        if(empty($type) || empty($code)){
+            $this->error('参数错误');
+        }      
+        $sns = ThinkOauth::getInstance($type);    
+        //腾讯微博需传递的额外参数
+        $extend = null;
+        if ($type == 'tencent') {
+            $extend = array('openid' => $this->_get('openid'), 'openkey' => $this->_get('openkey'));
+        }
+        $tokenArray = $sns->getAccessToken($code, $extend);
+        $openid = $tokenArray['openid'];
+        //请记住每个用户的openid都是唯一的,所以把openid存到数据库即可
+        $member = D('User');
+        $result = $member->where("openid = $openid")->find();
+        if($result){
+            //表示用户曾经登录过
+            $this->redirect(U('Index/indexLoginPage'));
+        }else{
+            $data['open_id'] = $openid;
+            if($member->add($data)){
+                $this->redirect(U('Index/indexLoginPage'));
+            }
+        }
+    }
+    
+    /**
+     * 微信登陆回调地址
+     * 如果需要手机微信注册 请用这个方法
+     * 参考文档：http://mp.weixin.qq.com/wiki/9/01f711493b5a02f24b04365ac5d8fd95.html
+     * @return [type] [description]
+     */
+    public function wechatCallback()
+    {
+        $data=array();
+        $wechat = new \Extend\Wechat($this->options);
+        $wxdata = $wechat->getOauthAccessToken();
+        /**
+         $wxdata 字段
+         {
+         "access_token":"ACCESS_TOKEN",
+         "expires_in":7200,
+         "refresh_token":"REFRESH_TOKEN",
+         "openid":"OPENID",
+         "scope":"SCOPE",
+         "unionid": "o6_bmasdasdsad6_2sgVt7hMZOPfL"
+         }
+         **/
+        $openid = $wxdata['openid'];
+        $access_token = $wxdata['access_token'];
+        session('openid',$openid);
+        session('access_token',$access_token);
+        //获取AUTH用户资料
+        $oauthUserinfo = $wechat->getOauthUserinfo($access_token,$openid);
+        /**
+         {
+         "openid":" OPENID",
+         "nickname": NICKNAME,
+         "sex":"1",
+         "province":"PROVINCE"
+         "city":"CITY",
+         "country":"COUNTRY",
+         "headimgurl":    "http://wx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/46",
+         "privilege":[
+         "PRIVILEGE1"
+         "PRIVILEGE2"
+         ],
+         "unionid": "o6_bmasdasdsad6_2sgVt7hMZOPfL"
+         }
+         **/
+        //是否关注微信号 1：关注  0：未关注  根据实际情况确定是不是要用
+        //session('subscribe',$userInfo['subscribe']);
+        //组合数据库中的用户字段
+        $data['openid'] = $oauthUserinfo['openid'];
+        $data['avatar'] =$oauthUserinfo['headimgurl'];
+        $data['status'] = 1;
+        $data['create_at'] = time();
+        $data['update_at'] = time();
+    
+        #
+        #
+        #  判断用户是否存在和和注册用户的代码自己实现。
+        #
+        #
+        #
+    
+    }
+      
     // 验证用户名存在方法
     public function ifuser()
     {
