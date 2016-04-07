@@ -2,6 +2,7 @@
 namespace Home\Controller;
 
 use Think\Controller;
+use Extend\Oauth\ThinkOauth;
 header("Content-Type:text/html;Charset=utf-8");
 
 class UserController extends Controller
@@ -23,19 +24,20 @@ class UserController extends Controller
     }
     
     // 登录方法
-    public function login()
+    public function login($type=null)
     {
-        $User = D('User');
-        $result = $User->where(array(
-            'username' => $_POST['username']
-        ))->find();
-        $password=md5($_POST['password']);
-        if (! $result) {
-            $data['status'] = 1;
-            $data['content'] = '该用户名尚未注册';
-            $this->ajaxReturn($data);
-        } else 
-            if (! ($result['password'] ==$password)) {
+        //方式1：本地账号登陆
+        if(empty($type)){
+            $User = D('User');
+            $result = $User->where(array(
+                'username' => $_POST['username']
+            ))->find();
+            $password=md5($_POST['password']);
+            if (! $result) {
+                $data['status'] = 1;
+                $data['content'] = '该用户名尚未注册';
+                $this->ajaxReturn($data);
+            } else if (! ($result['password'] ==$password)) {
                 $data['status'] = 1;
                 $data['content'] = '密码不正确';
                 $this->ajaxReturn($data);
@@ -46,6 +48,39 @@ class UserController extends Controller
                 session('nickname', $result['nickname']);
                 $this->ajaxReturn($data);
             }
+            return;
+        }
+        //方式2：如果是微信登录（微信内部浏览器登录，非扫码登录）
+        /*         if(strtolower($type) == "weixin"){
+         $appid = C('WX_APPID');
+         $redirect = C('WX_DOMAIN').U('Login/wechatCallback');
+         $scope = "snsapi_userinfo";
+         $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=$appid&redirect_uri=$redirect&response_type=code&scope=$scope&state=STATE#wechat_redirect";
+         redirect($url);
+         } */
+        if(strtolower($type) == "weixin"){
+            $appid = C('WX_APPID');
+            $redirect = C('WX_DOMAIN').U('Login/wechatCallback');
+            $scope = "snsapi_userinfo";
+            $url = "https://open.weixin.qq.com/connect/qrconnect?appid=$appid&redirect_uri=$redirect&response_type=code&scope=$scope&state=STATE#wechat_redirect";
+            //$url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=$appid&redirect_uri=$redirect&response_type=code&scope=$scope&state=STATE#wechat_redirect";
+            redirect($url);
+        }
+        
+        
+        //方式3：QQ  weibo  github第三方登陆
+        //验证允许实用的登陆方式，可在后台用代码实现
+        
+        $can_use = in_array(strtolower($type), array('qq','sina','github'));
+        if(!$can_use){
+            $this->error("不允许使用此方式登陆");
+        }
+        //验证通过  使用第三方登陆
+        if($type != null){
+            $sns = ThinkOauth::getInstance($type);
+            redirect($sns->getRequestCodeURL());
+        }
+        
     }
     
     // 验证用户名存在方法

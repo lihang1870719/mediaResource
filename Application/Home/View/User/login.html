@@ -6,6 +6,20 @@
 	<link rel="stylesheet" href="__STATIC__/css/common.css">
 	<link rel="stylesheet" href="__STATIC__/css/login.css">
 	<link rel="stylesheet" href="__STATIC__/css/buttons.css">
+	<link rel="stylesheet" href="__STATIC__/font-awesome/css/font-awesome.css">
+	<style type="text/css">
+		.third-login{
+			color: #fff;
+			padding-top: 10px;
+		}
+		.third-login a{
+			padding-left: 30px;
+		}
+		.third-login .ub-icon {
+			display:inline-block;
+			padding-left:80px;
+		}
+	</style>
 	<script type="text/javascript"
 	src="__STATIC__/js/jquery-2.2.2.min.js"></script>
 </head>
@@ -28,6 +42,16 @@
 			</div>
 			<div class='hint umar-t20'></div>
 			<div class="ub ub-ac ub-pc umar-t20"><div class="button button-raised button-primary button-pill button-large w350" id="loginBtn">登录</div></div>
+			<div class='hint umar-t20'></div>
+			<!-- add by lihang for login with qq -->
+			<div class="ub third-login">
+				<span>其它方式登录</span>
+				<div class="ub-icon">
+					<a href="{:U('User/login',array('type'=>'qq'))}"><i class="fa fa-2x fa-qq"></i></a>
+					<a href="{:U('User/login',array('type'=>'weixin'))}"><i class="fa fa-2x fa-weixin"></i></a>
+					<a href="{:U('User/login',array('type'=>'weibo'))}"><i class="fa fa-2x fa-weibo"></i></a>
+				</div>
+			</div>
 		</form>
 	</div>
 </body>

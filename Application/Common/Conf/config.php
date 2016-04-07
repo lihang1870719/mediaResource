@@ -3,7 +3,7 @@ return array(
 	//'配置项'=>'配置值'
     'MODULE_ALLOW_LIST' =>    array('Home','Admin','App'),
     'SHOW_PAGE_TRACE'   =>  true,
-    'LOAD_EXT_CONFIG'   => 'db',
+	'LOAD_EXT_CONFIG'   => 'db,wechat,oauth', 
     'URL_CASE_INSENSITIVE'  =>  true,  //url不区分大小写
     'URL_MODEL'   => 2,
     //'URL_HTML_SUFFIX'  =>'html',
