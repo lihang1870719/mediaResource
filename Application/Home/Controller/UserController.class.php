@@ -62,7 +62,11 @@ class UserController extends Controller
             $appid = C('WX_APPID');
             $redirect = C('WX_DOMAIN').U('Login/wechatCallback');
             $scope = "snsapi_userinfo";
-            $url = "https://open.weixin.qq.com/connect/qrconnect?appid=$appid&redirect_uri=$redirect&response_type=code&scope=$scope&state=STATE#wechat_redirect";
+            //微信登录授权
+            //string url = "https://open.weixin.qq.com/connect/qrconnect?appid=" + appId + "&redirect_uri=" + redirectUrl +"&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect";
+            //微信OpenId授权
+            //string url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + appId + "&redirect_uri=" + redirectUrl +"&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect";
+            $url = "https://open.weixin.qq.com/connect/qrconnect?appid=$appid&redirect_uri=$redirect&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect";
             //$url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=$appid&redirect_uri=$redirect&response_type=code&scope=$scope&state=STATE#wechat_redirect";
             redirect($url);
         }
@@ -163,14 +167,6 @@ class UserController extends Controller
         $data['status'] = 1;
         $data['create_at'] = time();
         $data['update_at'] = time();
-    
-        #
-        #
-        #  判断用户是否存在和和注册用户的代码自己实现。
-        #
-        #
-        #
-    
     }
       
     // 验证用户名存在方法

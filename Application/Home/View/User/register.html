@@ -93,7 +93,7 @@
 							}
 							$
 									.post(
-											"{:U('User/register')}",
+											"{:U('Home/User/register')}",
 											{
 												username : username,
 												password : password,
@@ -210,7 +210,7 @@
 
 		//发送邮件请求
 		function sendEmail(username, verifyCode) {
-			$.post("{:U('User/sendEmail')}", {
+			$.post("{:U('Home/User/sendEmail')}", {
 				username : username,
 				verifycode : verifyCode,
 				type : 2,
@@ -234,7 +234,7 @@
 
 		//改变状态
 		function changeCodeState(id) {
-			$.post("{:U('User/changeCodeState')}", {
+			$.post("{:U('Home/User/changeCodeState')}", {
 				id : id,
 			}, function(data) {
 				console.log(data);
