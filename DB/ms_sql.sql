@@ -10,7 +10,7 @@ USE `ms`;
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2016-03-31 20:28:23
+-- 生成日期: 2016-04-08 20:59:47
 -- 服务器版本: 5.5.47-0ubuntu0.14.04.1
 -- PHP 版本: 5.5.9-1ubuntu4.14
 
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `ms_admin` (
 --
 
 INSERT INTO `ms_admin` (`id`, `username`, `password`, `is_effect`, `is_delete`, `role_id`, `login_time`, `login_ip`) VALUES
-(1, 'admin', '7fef6171469e80d32c0559f88b377245', 1, 0, 0, '1459411713', '0.0.0.0'),
+(1, 'admin', '7fef6171469e80d32c0559f88b377245', 1, 0, 0, '1460118974', '0.0.0.0'),
 (2, 'lihang', '2a08109ac73764f1de067567ce909c40', 1, 0, 1, '1459307070', '0.0.0.0'),
 (5, '111111111111', '111', 1, 0, 1, '2016-03-24 01:29:56', ''),
 (6, 'sdsa', '6512bd43d9caa6e02c990b0a82652dca', 0, 0, 1, '2016-03-24 01:35:05', ''),
@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `ms_comments` (
   `type` tinyint(1) DEFAULT '1' COMMENT '1:文本,2:语音',
   `style` tinyint(1) DEFAULT '0' COMMENT '0 评论:,1:笔记',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
 
 --
 -- 转存表中的数据 `ms_comments`
@@ -164,7 +164,11 @@ INSERT INTO `ms_comments` (`id`, `comments`, `comments_links`, `time`, `course_i
 (13, '复合肥电话\n', NULL, '1459067521', 1, 1, 2, 1),
 (14, 'dsfdsafsdaf\n', NULL, '1459151815', 76, 1, 1, 0),
 (15, 'safdsafdsafsdaf', NULL, '0', 1, 1, 1, 1),
-(16, '1111111111111', NULL, '0', 1, 1, 1, 1);
+(16, '1111111111111', NULL, '0', 1, 1, 1, 1),
+(17, 'etewrt\n', NULL, '1459501018', 1, 1, 1, 0),
+(19, '滚滚滚古古怪怪', NULL, '0', 76, 1, 1, 1),
+(20, '', NULL, '0', 76, 1, 1, 1),
+(21, '呃呃呃', NULL, '0', 76, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -300,7 +304,7 @@ CREATE TABLE IF NOT EXISTS `ms_log` (
   `module` varchar(255) NOT NULL,
   `action` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='//记录' AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='//记录' AUTO_INCREMENT=7 ;
 
 --
 -- 转存表中的数据 `ms_log`
@@ -308,7 +312,11 @@ CREATE TABLE IF NOT EXISTS `ms_log` (
 
 INSERT INTO `ms_log` (`id`, `log_info`, `log_time`, `log_admin`, `log_ip`, `log_status`, `module`, `action`) VALUES
 (1, '管理员更新成功', 1459383233, 1, '0.0.0.0', 1, 'Admin', 'update'),
-(2, '管理员更新成功', 1459383361, 1, '::1', 1, 'Admin', 'update');
+(2, '管理员更新成功', 1459383361, 1, '::1', 1, 'Admin', 'update'),
+(3, 'Admin成功登录', 1459408571, 1, '0.0.0.0', 1, 'Admin', 'login'),
+(4, 'Admin成功登录', 1459472187, 1, '0.0.0.0', 1, 'Admin', 'login'),
+(5, 'Admin成功登录', 1459552565, 1, '0.0.0.0', 1, 'Admin', 'login'),
+(6, 'Admin成功登录', 1460090174, 1, '0.0.0.0', 1, 'Admin', 'login');
 
 -- --------------------------------------------------------
 
@@ -599,7 +607,7 @@ CREATE TABLE IF NOT EXISTS `ms_user` (
   `description` text COMMENT '个人简介',
   `open_id` tinyint(1) DEFAULT '0' COMMENT '0:正常 1: 来自微信 2: 来自QQ 3:来自其他',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- 转存表中的数据 `ms_user`
@@ -608,7 +616,8 @@ CREATE TABLE IF NOT EXISTS `ms_user` (
 INSERT INTO `ms_user` (`id`, `username`, `password`, `avatar`, `email`, `nickname`, `login_ip`, `create_at`, `update_at`, `is_delete`, `is_effect`, `type`, `description`, `open_id`) VALUES
 (1, 'hello', 'hello', NULL, NULL, NULL, NULL, '0', '0', 0, 1, 0, 'sadfff', 0),
 (3, '15002752798', '15002752798', NULL, NULL, NULL, NULL, '0', '0', 0, 1, 0, NULL, 0),
-(4, '15002752798', '15002752798', NULL, NULL, NULL, NULL, '0', '0', 0, 1, 0, NULL, 0);
+(6, '1157995231@qq.com', '698d51a19d8a121ce581499d7b701668', NULL, NULL, '111', NULL, '0', '0', 0, 1, 0, NULL, 0),
+(7, '18707199735', '698d51a19d8a121ce581499d7b701668', NULL, NULL, '111', NULL, '0', '0', 0, 1, 0, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -631,6 +640,35 @@ INSERT INTO `ms_user_course` (`id`, `user_id`, `course_history`) VALUES
 (1, 1, 2),
 (4, 1, 3),
 (7, 1, 4);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `ms_verifycode`
+--
+
+CREATE TABLE IF NOT EXISTS `ms_verifycode` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(20) NOT NULL,
+  `verifycode` varchar(20) NOT NULL,
+  `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `type` varchar(2) DEFAULT NULL COMMENT '1代表短信验证码，2代表邮箱验证码',
+  `state` varchar(30) DEFAULT '0' COMMENT '发送状态 0代表未成功 1代表成功',
+  `content` text COMMENT '发送过的验证信息',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+
+--
+-- 转存表中的数据 `ms_verifycode`
+--
+
+INSERT INTO `ms_verifycode` (`id`, `username`, `verifycode`, `create_at`, `type`, `state`, `content`) VALUES
+(12, '18707199735', '7652', '2016-04-08 12:30:54', '1', '1', '您的验证码是：【7652】。请不要把验证码泄露给其他人。如非本人操作，可不用理会！'),
+(11, '1157995231@qq.com', '179921', '2016-04-08 12:24:25', '2', '1', '亲爱的用户,您好,您在媒资管理平台上注册的验证码是179921'),
+(10, '1157995231@qq.com', '171169', '2016-04-08 12:22:07', '2', '1', '亲爱的用户,您好,您在媒资管理平台上注册的验证码是171169'),
+(9, '', '2230', '2016-04-08 12:12:46', NULL, '0', '您的验证码是：【2230】。请不要把验证码泄露给其他人。如非本人操作，可不用理会！'),
+(8, '', '4822', '2016-04-08 12:01:59', NULL, '0', '您的验证码是：【4822】。请不要把验证码泄露给其他人。如非本人操作，可不用理会！'),
+(7, '', '2750', '2016-04-08 12:01:38', NULL, '0', '您的验证码是：【2750】。请不要把验证码泄露给其他人。如非本人操作，可不用理会！');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
