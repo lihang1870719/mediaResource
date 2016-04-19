@@ -29,13 +29,23 @@ define(['jquery', 'utils'], function($, utils) {
 			var url = $('#action-url').val();
 			$.post(url, data, function(msg){
 			    if(msg.info == 'ok') {
-			    	alert(msg.info);
+			    	//alert(msg.info);
 			    	window.location.href = msg.callback;
 			    } else {
-			    	alert(msg.info);
+					swal({
+					  title: "Warning!",
+					  text: msg.info,
+					  type: "warning",
+					  confirmButtonText: "OK"
+					});
 			    }
 			  }, 'json').error(function(){
-				   alert("网络错误");
+					swal({
+					  title: "Error!",
+					  text: "网络错误",
+					  type: "error",
+					  confirmButtonText: "OK"
+					});
 			    });
 		});
 		$(container).on('click', '.submit', function(event){
@@ -66,22 +76,45 @@ define(['jquery', 'utils'], function($, utils) {
 		}); 
 		
 		$(container).on('click', '.delete-item', function(event){
-        	var msg = "您真的确定要删除吗？\n\n删除后将不能恢复!请确认！"; 
-            if (confirm(msg)==true){ 
-            	var url = $(event.target).parent().find('.delete-url').val();
-    		    $.get(url, function(msg){
-    			    if(msg.info == 'ok') {
-    			    	//alert(msg.info);
-    			    	window.location.href = msg.callback;
-    			    } else {
-    			    	alert(msg.info);
-    			    }
-    			  }, 'json').error(function(){
-    				   alert("网络错误");
-    			    });
-                }else{ 
-                    return false; 
-            } 
+			swal({
+			  title: "您真的要删除吗?",
+			  text: "删除后将不能恢复!",
+			  type: "warning",
+			  showCancelButton: true,
+			  confirmButtonColor: "#DD6B55",
+			  confirmButtonText: "Yes",
+			  cancelButtonText: "No",
+			  closeOnConfirm: false,
+			  closeOnCancel: false
+			},
+			function(isConfirm){
+			  if (isConfirm) {
+			    var url = $(event.target).parent().find('.delete-url').val();
+			    $.get(url, function(msg){
+				    if(msg.info == 'ok') {
+				    	//alert(msg.info);
+				    	window.location.href = msg.callback;
+				    } else {
+						swal({
+						  title: "Warning!",
+						  text: msg.info,
+						  type: "warning",
+						  confirmButtonText: "OK"
+						});
+				    }
+				  }, 'json').error(function(){
+						swal({
+						  title: "Error!",
+						  text: "网络错误",
+						  type: "error",
+						  confirmButtonText: "OK"
+						});
+				    });
+			  } else {
+				  swal("Cancelled", "admin is safe :)", "error");
+				  return false;
+			  }
+			});
 		});
     }
   }

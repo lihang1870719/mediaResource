@@ -19,12 +19,13 @@ require.config({
     	mobile:'app/mobile',
     	comments:'app/comments',
     	mail:'app/mail',
-    	message:'app/message'
+    	message:'app/message',
+    	salert:'lib/sweetalert.min'
     }
 });
 require(['app', 'verify', 'login', 'category', 
          'post','course', 'admin', 'role', 'mobile',
-         'comments','mail','message' , 'jquery', 'bootstrap'],
+         'comments','mail','message' , 'jquery', 'bootstrap','salert'],
          function(a, v, l, c, p, cs, ad, role,mobile,comments, mail, message){
 	a.init();	
 	v.init();
