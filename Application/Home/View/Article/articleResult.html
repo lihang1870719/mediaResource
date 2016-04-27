@@ -4,13 +4,13 @@
 	<div class="container upad-b30">
 		<div class="row">
 			<div class="ub">		<div class="lead ulev-30 ub-f1">全部课程</div>
-			<div class="lead ulev-15 ub-f1"><input type="text"  name="keywords" id="keywords" ></input>
+			<div class="lead ulev-15"><input type="text"  name="keywords" id="keywords" ></input>
 				<a  class="button button-action button-small" style="color: white;" id="search">搜索</a>
 			</div></div>
 			<ul class="">
 				<volist id="ca" name="catedata">
 					<li class=" ">
-						<a href='__MODULE__/Index/courselist/cateid/{$ca['id']}'>{$ca['title']}</a>
+						<a href='__MODULE__/Course/courselist/cateid/{$ca['id']}'>{$ca['title']}</a>
 					</li>
 				</volist>
 			</ul>
@@ -20,33 +20,33 @@
 </header>
 <!-- /Header -->
 <!-- Intro -->
-<div style="background-color: gray;">
+<div>
 	<div class="container">
-		<volist id="co" name="list">
+		<volist id="ar" name="list">
 			<div class="post umar-t20 umar-b20 bgc-ff courselist">
 				<h2 class="title">
-					<a  href={$co['link']}>{$co['title']}</a>
+					<a  href={$ar['link']}>{$ar['title']}</a>
 				</h2>
 				<p class="meta">
-					{$co['create_at']} Posted by {$co['user_id']}
+					{$ar['time']} Posted by {$ar['user_id']}
 				</p>
-				<div class="entry">
-					{$co['content']}
-				</div>
+<!-- 				<div class="entry">
+					{$ar['content']}
+				</div> -->
 			</div>
 		</volist>
 		<div id="page" class="umar-t20">{$page}</div>
-		<volist id="co" name="coursedata">
-			<div class="post umar-t20 umar-b20 bgc-ff courselist">
+		<volist id="co" name="articledata">
+			<div class="post umar-t20 umar-b20 bgc-ff courselist ubb b-d14">
 				<h2 class="title">
-					<a  href={$co['link']}>{$co['title']}</a>
+					<a>{$co['title']}</a>
 				</h2>
 				<p class="meta">
-					{$co['create_at']} Posted by {$co['user_id']}
+					{$co['time']} Posted by {$co['user_id']}
 				</p>
-				<div class="entry">
+<!-- 				<div class="entry">
 					{$co['content']}
-				</div>
+				</div> -->
 			</div>
 		</volist>
 		<div  style="color: red;font-size: 30px;margin-left: 20px;">
@@ -66,7 +66,7 @@
 			alert("请输入搜索关键字!");
 			return;
 		}
-		window.location.href="__MODULE__/Index/searchCourse/keywords/"+keywords;
+		window.location.href="__MODULE__/Article/searchArticle/keywords/"+keywords;
 	})
 </script>
 </html>

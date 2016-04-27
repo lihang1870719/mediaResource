@@ -92,6 +92,9 @@
 .umar-t80{
 	margin-top:60px;
 }
+.umar-l30{
+	margin-left:30px;
+}
 .umar-l50{
 	margin-left:50px;
 }
@@ -169,7 +172,7 @@ a{
 
 #page .num ,.prev ,.next{
 	font-size: 20px;
-	color: green;
+	color: black;
 	margin: 0 10px;
 }
 #page .current{
@@ -188,4 +191,35 @@ a{
 }
 .upad-b30{
 	padding-bottom: 30px;
+}
+.upad-l15{
+	padding-left: 15px;
+}
+.upad-l30{
+	padding-left: 30px;
+}
+.upad-lr100{
+	padding-left: 100px;
+	padding-right: 100px;
+}
+.ubb{
+border-bottom:  1px solid black;
+}
+.ubt{
+border-top:  1px solid black;
+}
+.ubl{
+border-left:  1px solid black;
+}
+.ulr{
+border-right:  1px solid black;
+}
+.b-d14{
+border-color: #C0C0C0;
+}
+.bg-ed{
+    background-color: #edf1f2;
+}
+#detail{
+	padding-left: 50px;
 }

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>个人中心</title>
+	<link rel="stylesheet" href="__STATIC__/css/style.css">
+	<link rel="stylesheet" href="__STATIC__/css/common.css">
+	<link rel="stylesheet" href="__STATIC__/css/buttons.css">
+	<link rel="stylesheet" href="__STATIC__/css/font-awesome.min.css">
+	<link rel="stylesheet" href="__STATIC__/css/bootstrap.min.css">
+</head>
+<body>
+	<div id="logo">
+		<h1>个人中心</h1>
+		<ul class="nav navbar-nav pull-right">
+			<div id="personal"><div class="ub">欢迎回来,<div id="nickname"></div></div>
+			<div class="ub umar-t10">
+				<div class="ub"><a href="__MODULE__/Index/indexLoginpage" class="button button-highlight button-big" >回到主页</a></div>
+				<div class="ub umar-l"><a href="__MODULE__/Index/exitLogin" class="button button-caution button-big" >退出</a></div></div>
+			</div>
+		</ul></div>
+		<hr />
+		<div id="header">
+			<div id="menu">
+				<ul>
+					<li><a href="__MODULE__/Course/show">课程</a></li>
+					<li><a href="__MODULE__/Article/show">文章</a></li>
+					<!-- 				<li><a href="#">个人资料</a></li> -->
+				</ul>
+			</div>
+			<!-- end #menu -->
+		</div>
+		<!-- end #header -->
+		<!-- end #header -->
+		<!--新增一篇文章-->
+		<div id="main" class="article ub ub-ac ub-pc umar-b20">
+			<div class="umar-t30">
+				<h4>编辑课程</h4>
+				<div>
+					<volist id="co" name="coursedata">
+						<div class='ub umar-t10'>
+							<div class="w100 padt5">课程名称:</div>
+							<input type="text" name="title" id="title" placeholder="请输入文章标题"
+							required="required" class="w300"  value={$co['title']} />
+						</div>
+						<div class='ub umar-t10'>
+							<div class="w100 ub padt5">类别:</div>
+							<div class="">
+								<select id="cate_id">
+									<volist id="ca" name="catedata">
+										<option value="{$ca['id']}">{$ca['title']}</option>
+									</volist>
+								</select>
+							</div>
+						</div>
+						<div class="umar-t10">
+							<p>课程或章节简介:</p>
+							<div class="umar-t10">
+								<script id="editor" type="text/plain"
+								style="width: 800px; height: 300px;">{$co['content']|htmlspecialchars_decode}</script>
+							</div>
+						</div>			
+						<div class='hint umar-t20'></div>	
+					</volist>
+					<div class="umar-t20">
+						<a
+						class="button button-glow button-rounded button-raised button-primary"
+						id="btn1">提交审核</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- end #page -->
+		<include file="Public/footer" title="展示文章内容" />
+		<!-- end #footer -->
+		<script type="text/javascript"
+		src="__STATIC__/ueditor/ueditor.config.js"></script>
+		<script type="text/javascript"
+		src="__STATIC__/ueditor/ueditor.all.min.js">
+
+	</script>
+	<script type="text/javascript"
+	src="__STATIC__/ueditor/lang/zh-cn/zh-cn.js"></script>
+	<script type="text/javascript" src="__STATIC__/js/jquery-2.2.2.min.js"></script>
+	<script type="text/javascript">
+	//实例化编辑器
+	//建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+	var ue = UE.getEditor('editor');
+	//获得编辑器里的纯文本内容
+	//UE.getEditor('editor').getContentTxt()
+	$("#btn1").click(function() {
+		//申请人id
+		var user_id = "<?php echo $_SESSION["user_id"]; ?>";
+		var nickname="<?php echo $_SESSION["nickname"]; ?>";
+		console.log(user_id);
+		//获取文章标题
+		var title = $("#title").val();
+		//获取分类id
+		var cate_id = $("#cate_id").val();
+		//文章内容
+		var content = UE.getEditor('editor').getContent();
+		var contentTxt = UE.getEditor('editor').getContentTxt();
+		if(!title){
+			alert("请输入标题");
+			return;
+		}
+		if(!content){
+			alert("请输入文章内容");
+			return;
+		}
+		$.post("{:U('Course/update')}", {
+			title : title,
+			content : content,
+			cate_id : cate_id,
+			user_id:user_id,
+			status:0
+		}, function(data) {
+			console.log(data);
+			var status = data.status;
+			var info = data.info;
+			if (status == 1) {
+				//更新成功时
+				$(".hint").text(info);
+				setTimeout('window.location.href="__MODULE__/Course/show"',2000);
+			} else {
+				$(".hint").text(info);
+			}
+		});
+	})
+</script>
+</script>
+</html>

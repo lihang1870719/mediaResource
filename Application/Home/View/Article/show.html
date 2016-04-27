@@ -4,27 +4,76 @@
 <div id="page" >
 	<div id="content">
 		<a href="__MODULE__/Article/addPage" class="button button-glow button-rounded button-raised button-primary">新增文章</a>
+		<volist id="ar" name="list">
+			<div class="post umar-t30 umar-b20 bgc-ff courselist ubb b-d14">
+				<div class="umar-t10"><h2 class="title">
+					<a href="__MODULE__/Article/detail/id/{$ar['id']}">{$ar['title']}</a>
+				</h2> </div>
+				<div class="ub umar-t10 upad-l15">
+					<div class="ub"><a href="__MODULE__/Article/edit/id/{$ar['id']}" class="button button-action button-rounded button-raised button-primary">编辑文章</a></div>
+					<div class="ub umar-l30"><a data-id={$ar['id']} class="button button-caution button-rounded button-raised button-primary">删除文章</a></div>
+				</div>
+				<p class="meta">
+					{$ar['time']} Posted by {$ar['user_id']}
+				</p>
+		<!-- 		<div class="entry">
+					{$co['content']}
+				</div> -->
+			</div>
+		</volist>
+		<div id="page" class="umar-t20">{$page}</div>
+
 		<volist id="ar" name="articledata">
 			<div class="post umar-t20">
 				<h2 class="title">
-					<a href="#">{$ar['title']}</a>
+					<a href="__MODULE__/Article/detail/id/{$ar['id']}">{$ar['title']}</a>
 				</h2>
-				<p class="meta umar-t10">
-					{$ar['create_at']} <!-- Sunday, April 26, 2009 7:27 AM --> Posted by  {$ar['nickname']}
-				</p>
-				<div class="entry">
-					<p style="font-size: 16px;">
-					{$ar['intro']}...........
-					</p>
+				<div class="ub umar-t10 upad-l15">
+					<div class="ub"><a href="__MODULE__/Article/edit/id/{$ar['id']}" class="button button-action button-rounded button-raised button-primary">编辑文章</a></div>
+					<div class="ub umar-l30">	
+						<a class="button button-caution button-rounded button-raised button-primary" data-id={$ar['id']}>删除文章</a></div>
+					</div>
+					<div class="meta umar-t10">
+						{$ar['create_at']} Posted by  {$ar['user_id']}
+					</div>
+					<div class="entry">
+						<p style="font-size: 16px;">
+							{$ar['cate_id']} 
+						</p>
+					</div>
 				</div>
-			</div>
-		</volist>
-	</div>
-	<!-- end #content -->
-<include file="Public/sidebar" />
+			</volist>
+		</div>
+		<!-- end #content -->
+
 		<!-- end #sidebar -->
 		<div style="clear: both;">&nbsp;</div>
 	</div>
 	<!-- end #page -->
 	<include file="Public/footer" title="展示文章内容" />
+	<script type="text/javascript">
+		$(".button-caution").click(function(){
+			var id=$(this).attr("data-id");
+			var flag=confirm("确定要删除吗");
+			if(flag){
+				$.post("{:U('Article/delete')}", {
+					id:id,
+				}, function(data) {
+					console.log(data);
+					var status = data.status;
+					var info = data.info;
+					console.log(info);
+					if (status == 1) {
+				//提交成功时
+				setTimeout('window.location.href="__MODULE__/Article/show"',3000);
+			} else {
+
+			}
+		});
+			}
+			else{
+
+			}
+		})
+	</script>
 	</html>

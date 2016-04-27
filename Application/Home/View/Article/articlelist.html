@@ -1,0 +1,72 @@
+<include file="Public/indexheader" title="展示课程内容" />
+<header id="head2"  class="">
+	<div class="container">
+		<div class="row">
+			<div class="ub">		<div class="lead ulev-30 ub-f1">全部文章</div>
+			<div class="lead ulev-15"><input type="text"  name="keywords" id="keywords" ></input>
+				<a  class="button button-action button-small" style="color: white;" id="search">搜索</a>
+			</div></div>
+			<ul class="">
+				<volist id="ca" name="catedata">
+					<li class=" ">
+						<a href='__MODULE__/Article/articlelist/cateid/{$ca['id']}'>{$ca['title']}</a>
+					</li>
+				</volist>
+			</ul>
+		</div>
+	</div>
+</div>
+</header>
+
+<!-- Intro -->
+<div>
+	<div class="container">
+		<volist id="ar" name="list">
+			<div class="post umar-t30 umar-b20 bgc-ff courselist ubb b-d14">
+				<div class="umar-t10"><h2 class="title">
+					<a href="__MODULE__/Article/detail/id/{$ar['id']}">{$ar['title']}</a>
+				</h2> </div>
+				<p class="meta">
+					{$ar['time']} Posted by {$ar['user_id']}
+				</p>
+		<!-- 		<div class="entry">
+					{$co['content']}
+				</div> -->
+			</div>
+		</volist>
+		<div id="page" class="umar-t20">{$page}</div>
+		<volist id="ar" name="articledata">
+			<div class="post umar-t20 umar-b20 bgc-ff courselist ubb b-d14">
+				<h2 class="title">
+					<a href="__MODULE__/Article/articlelist/cateid/{$ar['id']}">{$ar['title']}</a>
+				</h2>
+				<p class="meta">
+					{$ar['time']} Posted by {$ar['user_id']}
+				</p>
+<!-- 				<div class="entry">
+					{$co['content']}
+				</div> -->
+			</div>
+		</volist>
+		<div  style="color: red;font-size: 30px;margin-left: 20px;">
+			{$error.msg}
+		</div>
+	</div>
+</div> 
+
+<include file="Public/indexfooter" title="" />
+<script type="text/javascript">
+	$(document).ready(function(){
+
+	})
+
+	$("#search").click(function(){
+		var keywords=$('#keywords').val();
+		if(!keywords){
+			alert("请输入搜索关键字!");
+			return;
+		}
+		window.location.href="__MODULE__/Article/searchArticle/keywords/"+keywords;
+	})
+</script>
+</html>

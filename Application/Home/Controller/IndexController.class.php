@@ -55,10 +55,13 @@ class IndexController extends Controller
         $course=M("course");
         if ($course) {
             if($cateid==1){
-             $coursedata=$course->select();
-         }
-         else{
-            $coursedata=$course->where("cate_id=".$cateid)->select();
+               $coursedata=$course->select();
+           }
+           else{
+            $condition['cate_id'] = $cateid;
+            $condition['pid'] =$cateid;
+            $condition['_logic'] = 'OR';
+            $coursedata=$course->where($condition)->select();
         }
         $count=count($coursedata);
         if($count==0){
@@ -74,9 +77,9 @@ class IndexController extends Controller
         $this->assign('list',$list);// 赋值数据集
     }
     else{
-       $this->assign("coursedata", $coursedata);
-   }
-   $this->display('courselist');
+     $this->assign("coursedata", $coursedata);
+ }
+ $this->display('courselist');
 }
 }
 

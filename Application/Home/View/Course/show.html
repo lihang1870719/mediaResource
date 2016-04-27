@@ -6,55 +6,75 @@
 		<a href="__MODULE__/Course/addPage"
 		class="button button-glow button-rounded button-raised button-primary">新增课程</a>
 		<volist id="co" name="list">
-			<div class="post umar-t20">
+			<div class="post umar-t30 umar-b20 bgc-ff courselist">
 				<h2 class="title">
 					<a  href={$co['link']}>{$co['title']}</a>
 				</h2>
+				<div class="ub umar-t10 upad-l15">
+					<div class="ub"><a href="__MODULE__/Course/edit/id/{$co['id']}" class="button button-action button-rounded button-raised button-primary">编辑课程</a></div>
+					<div class="ub umar-l30">	<a data-id={$co['id']} class="button button-caution button-rounded button-raised button-primary">删除课程</a></div>
+				</div>
 				<p class="meta">
-					Sunday, April 26, 2009 7:27 AM Posted by <a href="#">Someone</a>
+					{$co['time']} Posted by {$co['user_id']}
 				</p>
 				<div class="entry">
-					{$co['content']}
+					{$co['content']|htmlspecialchars_decode}
 				</div>
 			</div>
 		</volist>
 		<div id="page">{$page}</div>
-		
+
 		<volist id="co" name="coursedata">
 			<div class="post umar-t20 umar-b20 bgc-ff courselist">
 				<h2 class="title">
 					<a  href={$co['link']}>{$co['title']}</a>
 				</h2>
-				<p class="meta">
-					{$co['create_at']} Posted by {$co['user_id']}
-				</p>
-				<div class="entry">
-					{$co['content']}
+				<div class="ub umar-t10 upad-l15">
+					<div class="ub"><a href="__MODULE__/Course/edit/id/{$co['id']}" class="button button-action button-rounded button-raised button-primary">编辑课程</a></div>
+					<div class="ub umar-l30">	<a data-id={$co['id']} class="button button-caution button-rounded button-raised button-primary">删除课程</a></div>
 				</div>
 			</div>
-		</volist>
-		<div  style="color: red;font-size: 30px;margin-left: 20px;">
-			{$error.msg}
+			<p class="meta">
+				{$co['create_at']} Posted by {$co['user_id']}
+			</p>
+			<div class="entry">
+				{$co['content']|htmlspecialchars_decode}
+			</div>
 		</div>
+	</volist>
+	<div  style="color: red;font-size: 30px;margin-left: 20px;">
+		{$error.msg}
 	</div>
-	<!-- end #content -->
-	<include file="Public/sidebar" />
-	<!-- end #sidebar -->
-	<div style="clear: both;">&nbsp;</div>
+</div>
+<!-- end #content -->
+<!-- end #sidebar -->
+<div style="clear: both;">&nbsp;</div>
 </div>
 <!-- end #page -->
 <include file="Public/footer" />
-<script type="text/javascript">
-	$("#search-submit").click(function(){
-		event.preventDefault(); 
-		var keywords=$('#search-text').val();
-		alert(keywords);
-		if(!keywords){
-			alert("请输入搜索关键字!");
-			return;
-		}
-		window.location.href="__MODULE__/Index/searchCourse/keywords/"+keywords;
-	})
-})
-</script>
+	<script type="text/javascript">
+		$(".button-caution").click(function(){
+			var id=$(this).attr("data-id");
+			var flag=confirm("确定要删除吗");
+			if(flag){
+				$.post("{:U('Course/delete')}", {
+					id:id,
+				}, function(data) {
+					console.log(data);
+					var status = data.status;
+					var info = data.info;
+					console.log(info);
+					if (status == 1) {
+				//提交成功时
+				setTimeout('window.location.href="__MODULE__/Course/show"',3000);
+			} else {
+
+			}
+		});
+			}
+			else{
+
+			}
+		})
+	</script>
 </html>

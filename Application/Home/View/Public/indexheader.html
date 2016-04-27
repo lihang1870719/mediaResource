@@ -10,7 +10,6 @@
 	<link rel="stylesheet"
 	href="__STATIC__/assets/css/font-awesome.min.css">
 	<link rel="stylesheet" href="__STATIC__/css/common.css">
-	<!-- Custom styles for our template -->
 	<link rel="stylesheet"
 	<link rel="stylesheet"
 	href="__STATIC__/assets/css/bootstrap-theme.css" media="screen">
@@ -38,13 +37,32 @@
 		</div>
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li ><a href="__MODULE__/Index/courselist/cateid/1">课程</a></li>
-				<li><a href="#">文章</a></li>
+				<li ><a href="__MODULE__/Course/courselist/cateid/1">课程</a></li>
+				<li><a href="__MODULE__/Article/articlelist/cateid/1">文章</a></li>
 			</ul>
+			<?php
+			$user_id = $_SESSION["user_id"];//这里获取一个user_id值
+			if($user_id > 0){         
+			//判断有session
+			?>
 			<ul class="nav navbar-nav pull-right">
-				<li><a href="__MODULE__/User/loginPage">登录</a></li>
-				<li><a href="__MODULE__/User/registerPage">注册</a></li>
-			</ul>
+				<div id="personal"><div class="ub">欢迎回来,<div id="nickname"></div></div>
+				<div class="ub umar-t10">
+					<div class="ub"><a href="__MODULE__/Course/show" class="button button-highlight button-big" >个人中心</a></div>
+					<div class="ub umar-l"><a href="__MODULE__/Index/exitLogin" class="button button-caution button-big" >退出</a></div></div>
+				</div>
+			</ul>    <!--有user_id输出这段-->
+			<?php
+		}
+		else{          //判断无session
+		?>
+		<ul class="nav navbar-nav pull-right">
+			<li><a href="__MODULE__/User/loginPage">登录</a></li>
+			<li><a href="__MODULE__/User/registerPage">注册</a></li>
+		</ul>     <!--无user_id输出这段-->
+		<?php
+	}
+	?>
 		</div>
 	</div>
 </div>

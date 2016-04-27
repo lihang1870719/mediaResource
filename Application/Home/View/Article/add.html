@@ -29,15 +29,7 @@
 			</ul>
 		</div>
 		<!-- end #menu -->
-		<div id="search">
-			<form method="get" action="">
-				<fieldset>
-					<input type="text" name="s" id="search-text" size="15" /> <input
-						type="submit" id="search-submit" value="GO" />
-				</fieldset>
-			</form>
-		</div>
-		<!-- end #search -->
+
 	</div>
 	<!-- end #header -->
 	<!-- end #header -->
@@ -59,12 +51,6 @@
 							<option value="{$ca['id']}">{$ca['title']}</option>
 							</volist>
 						</select>
-					</div>
-				</div>
-				<div class='ub umar-t10'>
-					<div class="w100 ub padt5">缩略图:</div>
-					<div class="">
-						<input type="file" id="inputfile">
 					</div>
 				</div>
 				<div class="umar-t10">
@@ -114,7 +100,6 @@
 		//文章内容
 		var content = UE.getEditor('editor').getContent();
 		var contentTxt = UE.getEditor('editor').getContentTxt();
-		var intro=contentTxt.substring(0,50);
 		if(!title){
 			alert("请输入标题");
 			return;
@@ -126,10 +111,8 @@
 		$.post("{:U('Article/add')}", {
 			title : title,
 			content : content,
-			intro:intro,
 			cate_id : cate_id,
 			user_id:user_id,
-			nickname:nickname
 		}, function(data) {
 			console.log(data);
 			var status = data.status;
@@ -137,6 +120,7 @@
 			if (status == 1) {
 				//提交成功时
 				$(".hint").text(info);
+				setTimeout(window.location.href="__MODULE__/Article/show",3000);
 			} else {
 				$(".hint").text(info);
 			}

@@ -1,52 +1,28 @@
-<include file="Public/header" title="展示文章内容" />
-
 <!-- end #header -->
-<div id="page" >
-	<div id="content">
-		<a href="__MODULE__/Article/addPage" class="button button-glow button-rounded button-raised button-primary">新增文章</a>
-		<volist id="ar" name="articledata">
-			<div class="post umar-t20">
-				<h2 class="title">
-					<a href="#">{$ar['title']}</a>
-				</h2>
-				<p class="meta umar-t10">
-					{$ar['create_at']} <!-- Sunday, April 26, 2009 7:27 AM --> Posted by  {$ar['nickname']}
-				</p>
-				<div class="entry">
-					<p style="font-size: 16px;">
-					{$ar['intro']}...........
+<!DOCTYPE html>
+<html>
+<head>
+	<title>文章内容</title>
+</head>
+<link rel="stylesheet" href="__STATIC__/css/common.css">
+<body>
+	<div id="page" >
+		<div id="detail">
+			<volist id="ar" name="articledata">
+				<div class="post umar-t20">
+					<h2 class="title">
+						<h1>{$ar['title']}</h1>
+					</h2>
+					<p class="meta umar-t10">
+						<p> {$ar['nickname']}{$ar['time']}</p>
+						<div class="ub">				<div class="bg-ed"> {$ar['catetitle']}</div><div class="ub-f1"></div></div>
 					</p>
+					<div class="entry">
+						<div>{$ar['content']|htmlspecialchars_decode}</div>
+					</div>
 				</div>
-			</div>
-		</volist>
-	</div>
-	<!-- end #content -->
-	<div id="sidebar">
-		<ul>
-				<li>
-					<h2>热门课程</h2>
-					<ul class="umar-t10 ">
-					<volist id="ar" name="articledata">
-						<li><a href="#">{$ar['title']}</a></li>
-					</volist>
-					</ul>
-				</li>
-				<li>
-					<h2>热门文章</h2>
-					<ul class="umar-t10">
-						<li><a href="#">Nec metus sed donec</a></li>
-						<li><a href="#">Magna lacus bibendum mauris</a></li>
-						<li><a href="#">Velit semper nisi molestie</a></li>
-						<li><a href="#">Eget tempor eget nonummy</a></li>
-						<li><a href="#">Nec metus sed donec</a></li>
-						<li><a href="#">Nec metus sed donec</a></li>
-					</ul>
-				</li>
-			</ul>
+			</volist>
 		</div>
-		<!-- end #sidebar -->
-		<div style="clear: both;">&nbsp;</div>
 	</div>
-	<!-- end #page -->
-	<include file="Public/footer" title="展示文章内容" />
-	</html>
+</body>
+</html>
